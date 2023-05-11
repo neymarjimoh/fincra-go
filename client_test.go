@@ -5,6 +5,12 @@ import (
 	"testing"
 )
 
+var (
+	clientTest = NewClient("rrMFfLEf43q7L2lNDgdM8hDzZnsDxZos", WithSandbox(true))
+)
+
+
+
 func TestClient(t *testing.T) {
 	testCases := map[string]struct {
 		input *Client
@@ -32,4 +38,13 @@ func TestClient(t *testing.T) {
 			i++
 		})
 	}
+}
+
+func TestClientSendRequest(t *testing.T) {
+	t.Run("send request", func(t *testing.T) {
+		_, err := clientTest.sendRequest("GET", "/", nil)
+		if err != nil {
+			t.Errorf("cannot send request %v", err)
+		}
+	})
 }

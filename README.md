@@ -31,8 +31,8 @@ Note:
     - Get business details (not done yet)
 
 ### Todos:
-- [ ] Set up project with base client wrapper done, write tests
-- [ ] update README with setup
+- [x] Set up project with base client wrapper done, write tests
+- [x] update README with setup
 - [ ] Business endpoints, tests and update README
 - [ ] Beneficiaries endpoints, tests and update README
 - [ ] Set up CI/CD with PR templates and auto tests for every build
