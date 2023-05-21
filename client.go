@@ -56,6 +56,8 @@ func getBaseUrl(sandbox bool) *url.URL {
 
 type Response map[string]interface{}
 
+var jsonResponse Response
+
 func (c *Client) sendRequest(method, path string, payload interface{}) ([]byte, error) {
 	var buf io.ReadWriter
 	if payload != nil {
@@ -88,6 +90,6 @@ func (c *Client) sendRequest(method, path string, payload interface{}) ([]byte, 
 	if err != nil {
 		return nil, fmt.Errorf("cannot read response from body: %w", err)
 	}
-	
+
 	return responseBody, nil
 }

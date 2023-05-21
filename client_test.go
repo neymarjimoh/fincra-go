@@ -3,13 +3,9 @@ package fincra
 import (
 	"net/url"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
 )
-
-var (
-	clientTest = NewClient("rrMFfLEf43q7L2lNDgdM8hDzZnsDxZos", WithSandbox(true))
-)
-
-
 
 func TestClient(t *testing.T) {
 	testCases := map[string]struct {
@@ -42,9 +38,21 @@ func TestClient(t *testing.T) {
 
 func TestClientSendRequest(t *testing.T) {
 	t.Run("send request", func(t *testing.T) {
-		_, err := clientTest.sendRequest("GET", "/", nil)
+		_, err := defaultTestClient().sendRequest("GET", "/", nil)
 		if err != nil {
 			t.Errorf("cannot send request %v", err)
 		}
 	})
+}
+
+func defaultTestClient() *Client {
+	return NewClient("rrMFfLEf43q7L2lNDgdM8hDzZnsDxZos", WithSandbox(true))
+}
+
+func testEqual(t *testing.T, want, got interface{}) {
+	t.Helper()
+
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("values not equal (-want / +got):\n%s", diff)
+	}
 }

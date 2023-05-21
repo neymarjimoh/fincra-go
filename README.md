@@ -3,11 +3,15 @@ An unofficial Go SDK for working with [Fincra API](https://fincra.com/)
 
 ## Installation
 #### To install, run:
-`go get github.com/neymarjimoh/fincra-go`
+```
+go get github.com/neymarjimoh/fincra-go
+```
 
 ## Usage
 #### Import the package:
-`import "github.com/neymarjimoh/fincra-go"`
+```
+import "github.com/neymarjimoh/fincra-go"
+```
 
 #### Initialize a new client:
 ```
@@ -27,13 +31,19 @@ Note:
 - Get your keys from your Fincra dashboard and be sure to add it as environment variables
 
 ## Functionalities Currently Supported
-1. Business
-    - Get business details (not done yet)
+### 1. Business
+#### - Get business details:
+This method lets you retrieves the unique Identifier of your business and other information such as your email etc.
+
+Usage example:
+```
+resp, err := client.GetBusinessId()
+```
 
 ### Todos:
 - [x] Set up project with base client wrapper done, write tests
 - [x] update README with setup
-- [ ] Business endpoints, tests and update README
+- [x] Business endpoints, tests and update README
 - [ ] Beneficiaries endpoints, tests and update README
 - [ ] Set up CI/CD with PR templates and auto tests for every build
 - [ ] Chargebacks endpoints, tests and update README
