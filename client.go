@@ -12,12 +12,12 @@ import (
 
 const (
 	sandboxUrl = "https://sandboxapi.fincra.com"
-	liveUrl = "https://api.fincra.com"
+	liveUrl    = "https://api.fincra.com"
 )
 
 type Client struct {
-	apiKey string
-	BaseUrl *url.URL
+	apiKey     string
+	BaseUrl    *url.URL
 	HttpClient *http.Client
 }
 
