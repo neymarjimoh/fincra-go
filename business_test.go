@@ -6,7 +6,7 @@ import (
 )
 
 func TestGetBusinessId(t *testing.T) {
-	t.Run("fetch business info",  func(t *testing.T) {
+	t.Run("fetch business info", func(t *testing.T) {
 		client := defaultTestClient()
 
 		resp, err := client.GetBusinessId()
@@ -15,7 +15,7 @@ func TestGetBusinessId(t *testing.T) {
 		}
 
 		fmt.Println(resp)
-		
+
 		want := map[string]interface{}{
 			"success": true,
 			"message": "Parent business fetched successfully",
@@ -23,7 +23,7 @@ func TestGetBusinessId(t *testing.T) {
 
 		got := make(map[string]interface{}, len(want))
 		for k, v := range resp {
-			if  k == "message" || k == "success"  {
+			if k == "message" || k == "success" {
 				got[k] = v
 			}
 		}

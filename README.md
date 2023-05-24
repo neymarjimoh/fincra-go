@@ -45,6 +45,7 @@ resp, err := client.GetBusinessId()
 - [x] update README with setup
 - [x] Business endpoints, tests and update README
 - [ ] Beneficiaries endpoints, tests and update README
+- [ ] add faker emails, ids etc to test for avoiding dplicate error
 - [ ] Set up CI/CD with PR templates and auto tests for every build
 - [ ] Chargebacks endpoints, tests and update README
 - [ ] Conversions endpoints, tests and update README
