@@ -67,6 +67,22 @@ type createBeneficiaryRequest struct {
 	UniqueIdentifier   string                 `json:"uniqueIdentifier,omitempty"`
 }
 
+type GetAllBeneficiariesParams struct {
+	BusinessId string `json:"businessId"`
+	Page       string `json:"page"`
+	PerPage    string `json:"perPage"`
+}
+
+type getBeneficiariesRequest struct {
+	Page    string `json:"page,omitempty"`
+	PerPage string `json:"perPage,omitempty"`
+}
+
+type GetBeneficiaryParams struct {
+	BusinessId string `json:"businessId"`
+	BeneficiaryId       string `json:"beneficiaryId"`
+}
+
 // create a beneficiary for business
 // client := fincra.NewClient(apiKey)
 // resp, err := client.CreateBeneficiary(&client.CreateBeneficiaryBody{})
@@ -93,6 +109,51 @@ func (c *Client) CreateBeneficiary(beneficiary *CreateBeneficiaryBody) (Response
 	}
 
 	response, err := c.sendRequest("POST", path, &request)
+
+	_ = json.Unmarshal(response, &jsonResponse)
+
+	return jsonResponse, err
+}
+
+func (c *Client) GetAllBeneficiaries(params *GetAllBeneficiariesParams) (Response, error) {
+	if params.BusinessId == "" {
+		return Response{}, errors.New("businessId is required to fetch the beneficiary")
+	}
+
+	if params.Page == "" {
+		params.Page = "1"
+	}
+
+	if params.PerPage == "" {
+		params.PerPage = "10"
+	}
+
+	path := "/profile/beneficiaries/business/" + params.BusinessId
+
+	request := getBeneficiariesRequest{
+		Page:    params.Page,
+		PerPage: params.PerPage,
+	}
+
+	response, err := c.sendRequest("GET", path, &request)
+
+	_ = json.Unmarshal(response, &jsonResponse)
+
+	return jsonResponse, err
+}
+
+func (c *Client) GetBeneficiary(params *GetBeneficiaryParams) (Response, error) {
+	if params.BusinessId == "" {
+		return Response{}, errors.New("businessId is required to fetch the beneficiary")
+	}
+
+	if params.BeneficiaryId == "" {
+		return Response{}, errors.New("beneficiaryId is required to fetch the beneficiary")
+	}
+
+	path := "/profile/beneficiaries/business/" + params.BusinessId + "/" + params.BeneficiaryId
+
+	response, err := c.sendRequest("GET", path, nil)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 

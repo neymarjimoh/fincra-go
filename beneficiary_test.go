@@ -57,3 +57,70 @@ func TestCreateBeneficiary(t *testing.T) {
 		testEqual(t, got, want)
 	})
 }
+
+func TestGetBeneficiaries(t *testing.T) {
+	getBeneficiary := &GetAllBeneficiariesParams{
+		BusinessId: "6457d39b12b4401f99a54772",
+		Page:       "1",
+		PerPage:    "10",
+	}
+
+	t.Run("get all beneficiaries", func(t *testing.T) {
+		client := defaultTestClient()
+
+		resp, err := client.GetAllBeneficiaries(getBeneficiary)
+		if err != nil {
+			t.Errorf("error getting all beneficiaries: %v", err)
+		}
+		fmt.Println("getting all beneficiaries")
+
+		fmt.Println(resp)
+
+		want := map[string]interface{}{
+			"success": true,
+			"message": "Beneficiaries fetched successfully",
+		}
+
+		got := make(map[string]interface{}, len(want))
+		for k, v := range resp {
+			if k == "message" || k == "success" {
+				got[k] = v
+			}
+		}
+
+		testEqual(t, got, want)
+	})
+}
+
+func TestGetBeneficiary(t *testing.T) {
+	getABeneficiary := &GetBeneficiaryParams{
+		BusinessId: "6457d39b12b4401f99a54772",
+		BeneficiaryId: "646db15a8cdec23981165184",
+	}
+
+	t.Run("get beneficiary", func(t *testing.T) {
+		client := defaultTestClient()
+
+		resp, err := client.GetBeneficiary(getABeneficiary)
+		if err != nil {
+			t.Errorf("error getting the specified beneficiary: %v", err)
+		}
+		fmt.Println("getting beneficiary")
+
+		fmt.Println(resp)
+
+		// want := map[string]interface{}{
+		// 	"success": true,
+		// 	"message": "Beneficiaries fetched successfully",
+		// }
+
+		// got := make(map[string]interface{}, len(want))
+		// for k, v := range resp {
+		// 	if k == "message" || k == "success" {
+		// 		got[k] = v
+		// 	}
+		// }
+
+		// testEqual(t, got, want)
+	})
+}
