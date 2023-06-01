@@ -5,6 +5,10 @@ import (
 	"errors"
 )
 
+const (
+	beneficiariesUrl = "/profile/beneficiaries/business/"
+)
+
 type BeneficiaryType string
 type PaymentDestinationType string
 
@@ -35,6 +39,22 @@ type CreateBeneficiaryBody struct {
 	DestinationAddress string                 `json:"destinationAddress"`
 	UniqueIdentifier   string                 `json:"uniqueIdentifier,omitempty"`
 	BusinessId         string                 `json:"businessId"` // needed to be passed in params
+}
+
+type UpdateBeneficiaryBody struct {
+	FirstName          string `json:"firstName"`
+	LastName           string `json:"lastName,omitempty"`
+	Email              string `json:"email,omitempty"`
+	PhoneNumber        string `json:"phoneNumber,omitempty"`
+	AccountHolderName  string `json:"accountHolderName"`
+	Bank               `json:"bank,omitempty"`
+	Type               BeneficiaryType        `json:"type"` // individual or corporate
+	Currency           string                 `json:"currency"`
+	PaymentDestination PaymentDestinationType `json:"paymentDestination"`
+	DestinationAddress string                 `json:"destinationAddress"`
+	UniqueIdentifier   string                 `json:"uniqueIdentifier,omitempty"`
+	BusinessId         string                 `json:"businessId"`    // needed to be passed in params
+	BeneficiaryId      string                 `json:"beneficiaryId"` // needed to be passed in params
 }
 
 type Bank struct {
@@ -79,8 +99,8 @@ type getBeneficiariesRequest struct {
 }
 
 type GetBeneficiaryParams struct {
-	BusinessId string `json:"businessId"`
-	BeneficiaryId       string `json:"beneficiaryId"`
+	BusinessId    string `json:"businessId"`
+	BeneficiaryId string `json:"beneficiaryId"`
 }
 
 // create a beneficiary for business
@@ -91,7 +111,7 @@ func (c *Client) CreateBeneficiary(beneficiary *CreateBeneficiaryBody) (Response
 		return Response{}, errors.New("business ID is required for beneficiary")
 	}
 
-	path := "/profile/beneficiaries/business/" + beneficiary.BusinessId
+	path := beneficiariesUrl + beneficiary.BusinessId
 
 	// Create a new request object without the BusinessId field
 	request := createBeneficiaryRequest{
@@ -115,6 +135,7 @@ func (c *Client) CreateBeneficiary(beneficiary *CreateBeneficiaryBody) (Response
 	return jsonResponse, err
 }
 
+// Get all beneficiaries for a business
 func (c *Client) GetAllBeneficiaries(params *GetAllBeneficiariesParams) (Response, error) {
 	if params.BusinessId == "" {
 		return Response{}, errors.New("businessId is required to fetch the beneficiary")
@@ -128,7 +149,7 @@ func (c *Client) GetAllBeneficiaries(params *GetAllBeneficiariesParams) (Respons
 		params.PerPage = "10"
 	}
 
-	path := "/profile/beneficiaries/business/" + params.BusinessId
+	path := beneficiariesUrl + params.BusinessId
 
 	request := getBeneficiariesRequest{
 		Page:    params.Page,
@@ -142,6 +163,7 @@ func (c *Client) GetAllBeneficiaries(params *GetAllBeneficiariesParams) (Respons
 	return jsonResponse, err
 }
 
+// Get a benefiiciary from a business
 func (c *Client) GetBeneficiary(params *GetBeneficiaryParams) (Response, error) {
 	if params.BusinessId == "" {
 		return Response{}, errors.New("businessId is required to fetch the beneficiary")
@@ -151,9 +173,62 @@ func (c *Client) GetBeneficiary(params *GetBeneficiaryParams) (Response, error) 
 		return Response{}, errors.New("beneficiaryId is required to fetch the beneficiary")
 	}
 
-	path := "/profile/beneficiaries/business/" + params.BusinessId + "/" + params.BeneficiaryId
+	path := beneficiariesUrl + params.BusinessId + "/" + params.BeneficiaryId
 
 	response, err := c.sendRequest("GET", path, nil)
+
+	_ = json.Unmarshal(response, &jsonResponse)
+
+	return jsonResponse, err
+}
+
+// update a beneficiary of a business
+// see https://docs.fincra.com/reference/update-a-beneficiary for required parameters
+func (c *Client) UpdateBeneficiary(body *UpdateBeneficiaryBody) (Response, error) {
+	if body.BusinessId == "" {
+		return Response{}, errors.New("businessId is required to update the beneficiary")
+	}
+
+	if body.BeneficiaryId == "" {
+		return Response{}, errors.New("beneficiaryId is required to update the beneficiary")
+	}
+
+	path := beneficiariesUrl + body.BusinessId + "/" + body.BeneficiaryId
+
+	request := createBeneficiaryRequest{
+		FirstName:          body.FirstName,
+		LastName:           body.LastName,
+		Email:              body.Email,
+		PhoneNumber:        body.PhoneNumber,
+		AccountHolderName:  body.AccountHolderName,
+		Bank:               body.Bank,
+		Type:               body.Type,
+		Currency:           body.Currency,
+		PaymentDestination: body.PaymentDestination,
+		DestinationAddress: body.DestinationAddress,
+		UniqueIdentifier:   body.UniqueIdentifier,
+	}
+
+	response, err := c.sendRequest("PATCH", path, &request)
+
+	_ = json.Unmarshal(response, &jsonResponse)
+
+	return jsonResponse, err
+}
+
+// delete a beneficiary of a business
+func (c *Client) DeleteBeneficiary(params *GetBeneficiaryParams) (Response, error) {
+	if params.BusinessId == "" {
+		return Response{}, errors.New("businessId is required to fetch the beneficiary")
+	}
+
+	if params.BeneficiaryId == "" {
+		return Response{}, errors.New("beneficiaryId is required to fetch the beneficiary")
+	}
+
+	path := beneficiariesUrl + params.BusinessId + "/" + params.BeneficiaryId
+
+	response, err := c.sendRequest("DELETE", path, nil)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 
