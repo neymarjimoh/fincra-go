@@ -72,7 +72,6 @@ func TestGetBeneficiaries(t *testing.T) {
 		if err != nil {
 			t.Errorf("error getting all beneficiaries: %v", err)
 		}
-		fmt.Println("getting all beneficiaries")
 
 		fmt.Println(resp)
 
@@ -94,7 +93,7 @@ func TestGetBeneficiaries(t *testing.T) {
 
 func TestGetBeneficiary(t *testing.T) {
 	getABeneficiary := &GetBeneficiaryParams{
-		BusinessId: "6457d39b12b4401f99a54772",
+		BusinessId:    "6457d39b12b4401f99a54772",
 		BeneficiaryId: "646db15a8cdec23981165184",
 	}
 
@@ -105,22 +104,73 @@ func TestGetBeneficiary(t *testing.T) {
 		if err != nil {
 			t.Errorf("error getting the specified beneficiary: %v", err)
 		}
-		fmt.Println("getting beneficiary")
 
 		fmt.Println(resp)
 
-		// want := map[string]interface{}{
-		// 	"success": true,
-		// 	"message": "Beneficiaries fetched successfully",
-		// }
+		want := map[string]interface{}{
+			"success": true,
+			"message": "Beneficiary fetched successfully",
+		}
 
-		// got := make(map[string]interface{}, len(want))
-		// for k, v := range resp {
-		// 	if k == "message" || k == "success" {
-		// 		got[k] = v
-		// 	}
-		// }
+		got := make(map[string]interface{}, len(want))
+		for k, v := range resp {
+			if k == "message" || k == "success" {
+				got[k] = v
+			}
+		}
 
-		// testEqual(t, got, want)
+		testEqual(t, got, want)
+	})
+}
+
+func TestUpdateBeneficiary(t *testing.T) {
+	updateBeneficiary := &UpdateBeneficiaryBody{
+		BusinessId:    "6457d39b12b4401f99a54772",
+		BeneficiaryId: "646db15a8cdec23981165184",
+		FirstName:     "Tester 3",
+		Type:          Individual,
+	}
+
+	t.Run("update beneficiary", func(t *testing.T) {
+		client := defaultTestClient()
+
+		resp, err := client.UpdateBeneficiary(updateBeneficiary)
+		if err != nil {
+			t.Errorf("error updating beneficiary: %v", err)
+		}
+
+		fmt.Println(resp)
+	})
+}
+
+func TestDeleteBeneficiary(t *testing.T) {
+	getABeneficiary := &GetBeneficiaryParams{
+		BusinessId:    "6457d39b12b4401f99a54772",
+		BeneficiaryId: "646db15a8cdec23981165184",
+	}
+
+	t.Run("delete beneficiary", func(t *testing.T) {
+		client := defaultTestClient()
+
+		resp, err := client.GetBeneficiary(getABeneficiary)
+		if err != nil {
+			t.Errorf("error getting the specified beneficiary: %v", err)
+		}
+
+		fmt.Println(resp)
+
+		want := map[string]interface{}{
+			"success": true,
+			"message": "Beneficiary fetched successfully",
+		}
+
+		got := make(map[string]interface{}, len(want))
+		for k, v := range resp {
+			if k == "message" || k == "success" {
+				got[k] = v
+			}
+		}
+
+		testEqual(t, got, want)
 	})
 }
