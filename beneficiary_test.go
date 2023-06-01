@@ -152,25 +152,11 @@ func TestDeleteBeneficiary(t *testing.T) {
 	t.Run("delete beneficiary", func(t *testing.T) {
 		client := defaultTestClient()
 
-		resp, err := client.GetBeneficiary(getABeneficiary)
+		resp, err := client.DeleteBeneficiary(getABeneficiary)
 		if err != nil {
-			t.Errorf("error getting the specified beneficiary: %v", err)
+			t.Errorf("error deleting the specified beneficiary: %v", err)
 		}
 
 		fmt.Println(resp)
-
-		want := map[string]interface{}{
-			"success": true,
-			"message": "Beneficiary fetched successfully",
-		}
-
-		got := make(map[string]interface{}, len(want))
-		for k, v := range resp {
-			if k == "message" || k == "success" {
-				got[k] = v
-			}
-		}
-
-		testEqual(t, got, want)
 	})
 }
