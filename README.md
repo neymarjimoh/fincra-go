@@ -40,11 +40,108 @@ Usage example:
 resp, err := client.GetBusinessId()
 ```
 
+### 2. Beneficiaries
+#### - Create a beneficiary:
+This method is used for creating a Beneficiary.
+
+Usage example:
+```
+data := &fincra.CreateBeneficiaryBody{
+  FirstName: 'efe',
+  LastName: 'ebieroma',
+  Email: 'efe@hahaha.com',
+  PhoneNumber: '09090909090',
+  AccountHolderName: 'efe stephen ebieroma',
+  Bank: fincra.Bank{
+    Name: 'Wema Bank',
+    Code: '06',
+    SortCode: '928927',
+    Branch: 'Ota',
+    Address: fincra.Address{
+      Country: 'GB',
+      State: 'Lagos',
+      Zip: '123455',
+      City: 'Paris',
+      Street: 'Osapa London',
+    },
+  },
+  Type: fincra.Individual, // or Corporate 
+  Currency: 'GBP',
+  PaymentDestination: fincra.CryptoWallet,
+  UniqueIdentifier: '4',
+  DestinationAddress: 'Osapa London',
+  BusinessId: '6457d39b12b4401f99a54772',
+}
+
+resp, err := client.CreateBeneficiary(data)
+```
+**NOTE**: PaymentDestination accepts an enum of CryptoWallet (crypto_wallet), BankAccount (bank_account) or MobileMoneyWallet (mobile_money_wallet)
+
+#### - Fetch a beneficiary:
+This method is used for retrieving a single beneficiary attached to a business.
+
+Usage example:
+```
+data := &fincra.GetAllBeneficiariesParams{
+  BusinessId: '617fefbe4a68ec99ba6af0be',
+  Page: '1', // optional, defaults to 1
+  PerPage: '20', // optional, defaults to 10
+}
+
+resp, err := client.GetAllBeneficiaries(data);
+```
+
+#### - List beneficiaries:
+This method is used for retrieving a single beneficiary attached to a business.
+
+Usage example:
+```
+data := &fincra.GetBeneficiaryParams{
+  BusinessId: '617fefbe4a68ec99ba6af0be',
+  BeneficiaryId: '618fefbe4a68ec99ba5af0be',
+}
+
+resp, err := client.GetBeneficiary(data);
+```
+
+#### - Update a beneficiary:
+This method is used for updating a Beneficiary.
+
+Usage example:
+```
+data := &fincra.UpdateBeneficiaryBody{
+  FirstName: 'efe',
+  LastName: 'ebieroma',
+  Email: 'efe@hahaha.com',
+  PhoneNumber: '09090909090',
+  AccountHolderName: 'efe stephen ebieroma',
+  DestinationAddress: 'Osapa London',
+  BusinessId: '6457d39b12b4401f99a54772',
+  BeneficiaryId: '646db15a8cdec23981165184',
+}
+
+resp, err := client.UpdateBeneficiary(data)
+```
+More details about the parameters for the above method [here](https://docs.fincra.com/reference/update-a-beneficiary)
+
+#### - Delete a beneficiary:
+This method is used for deleting a beneficiary.
+
+Usage example:
+```
+data := &fincra.GetBeneficiaryParams{
+  BusinessId: '617fefbe4a68ec99ba6af0be',
+  BeneficiaryId: '618fefbe4a68ec99ba5af0be',
+}
+
+resp, err := client.DeleteBeneficiary(data);
+```
+
 ### Todos:
 - [x] Set up project with base client wrapper done, write tests
 - [x] update README with setup
 - [x] Business endpoints, tests and update README
-- [ ] Beneficiaries endpoints, tests and update README
+- [x] Beneficiaries endpoints, tests and update README
 - [ ] add faker emails, ids etc to test for avoiding dplicate error
 - [ ] Set up CI/CD with PR templates and auto tests for every build
 - [ ] Chargebacks endpoints, tests and update README
