@@ -33,7 +33,7 @@ Note:
 ## Functionalities Currently Supported
 ### 1. Business
 #### - Get business details:
-This method lets you retrieves the unique Identifier of your business and other information such as your email etc.
+This method lets you retrieve the unique Identifier of your business and other information such as your email etc.
 
 Usage example:
 ```
@@ -144,11 +144,10 @@ resp, err := client.DeleteBeneficiary(data);
 - [x] Beneficiaries endpoints, tests and update README
 - [ ] add faker emails, ids etc to test for avoiding dplicate error
 - [ ] Set up CI/CD with PR templates and auto tests for every build
-- [ ] Chargebacks endpoints, tests and update README
+- [ ] Quotes endpoints, tests and update README
 - [ ] Conversions endpoints, tests and update README
 - [ ] Collections endpoints, tests and update README
 - [ ] Payouts endpoints, tests and update README
-- [ ] Quotes endpoints, tests and update README
 - [ ] Subaccounts endpoints, tests and update README
 - [ ] Verification endpoints, tests and update README
 - [ ] Subaccounts endpoints, tests and update README
