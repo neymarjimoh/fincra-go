@@ -33,7 +33,7 @@ Note:
 ## Functionalities Currently Supported
 ### 1. Business
 #### - Get business details:
-This method lets you retrieves the unique Identifier of your business and other information such as your email etc.
+This method lets you retrieve the unique Identifier of your business and other information such as your email etc.
 
 Usage example:
 ```
@@ -137,6 +137,39 @@ data := &fincra.GetBeneficiaryParams{
 resp, err := client.DeleteBeneficiary(data);
 ```
 
+### 3. Conversions
+#### - Convert a currency:
+This method can convert one currency to another provided that it's a supported conversion currency e.g NGN to USD.
+
+Usage example:
+```
+data := &fincra.CreateConversionBody{
+  BusinessId: '617fefbe4a68ec99ba6af0be',
+  QuoteReference: '124246677268282782728',
+}
+
+resp, err := client.CreateConversion(data);
+```
+
+#### - List conversions:
+This method provides a list of all conversions performed by a business.
+
+Usage example:
+```
+businessId := "617fefbe4a68ec99ba6af0be"
+resp, err := client.GetBusinessConversions(businessId);
+```
+
+
+#### - Fetch a conversion:
+This method fetches a specific conversion performed by a parent Business or sub account.
+
+Usage example:
+```
+conversionId := "617fefbe4a68ec99ba6af0bh"
+resp, err := client.GetConversion(conversionId);
+```
+
 ### Todos:
 - [x] Set up project with base client wrapper done, write tests
 - [x] update README with setup
@@ -144,11 +177,10 @@ resp, err := client.DeleteBeneficiary(data);
 - [x] Beneficiaries endpoints, tests and update README
 - [ ] add faker emails, ids etc to test for avoiding dplicate error
 - [ ] Set up CI/CD with PR templates and auto tests for every build
-- [ ] Chargebacks endpoints, tests and update README
-- [ ] Conversions endpoints, tests and update README
+- [x] Conversions endpoints, tests and update README
+- [ ] Quotes endpoints, tests and update README
 - [ ] Collections endpoints, tests and update README
 - [ ] Payouts endpoints, tests and update README
-- [ ] Quotes endpoints, tests and update README
 - [ ] Subaccounts endpoints, tests and update README
 - [ ] Verification endpoints, tests and update README
 - [ ] Subaccounts endpoints, tests and update README

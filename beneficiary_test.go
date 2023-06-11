@@ -94,7 +94,7 @@ func TestGetBeneficiaries(t *testing.T) {
 func TestGetBeneficiary(t *testing.T) {
 	getABeneficiary := &GetBeneficiaryParams{
 		BusinessId:    "6457d39b12b4401f99a54772",
-		BeneficiaryId: "646db15a8cdec23981165184",
+		BeneficiaryId: "646dcf03999042ebe1bca5a1",
 	}
 
 	t.Run("get beneficiary", func(t *testing.T) {
