@@ -12,17 +12,34 @@ on:
 jobs:
 
   build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-
     - name: Set up Go
       uses: actions/setup-go@v3
       with:
         go-version: 1.19
 
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v3
+
+    - name: Get dependencies
+      run: go get -v -t -d ./...
+
     - name: Build
       run: go build -v ./...
 
-    - name: Test
-      run: go test -v ./...
+    - name: Test with Coverage
+      run: |
+        go test -v -coverprofile=coverage.out ./...
+        go get github.com/axw/gocov/gocov
+        go get github.com/AlekSi/gocov-xml
+        gocov convert coverage.out | gocov-xml > coverage.xml
+      env:
+        CI: true
+
+    - name: Upload coverage results
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage-results
+        path: coverage.xml
