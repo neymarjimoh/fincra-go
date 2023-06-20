@@ -18,6 +18,7 @@ const (
 	MobileMoneyWallet PaymentDestinationType = "mobile_money_wallet"
 	BankAccount       PaymentDestinationType = "bank_account"
 	CryptoWallet      PaymentDestinationType = "crypto_wallet"
+	FliqPayWallet      PaymentDestinationType = "fliqpay_wallet"
 )
 
 //	beneficiary := CreateBeneficiaryBody{

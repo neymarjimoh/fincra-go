@@ -170,16 +170,38 @@ conversionId := "617fefbe4a68ec99ba6af0bh"
 resp, err := client.GetConversion(conversionId);
 ```
 
+### 4. Quotes
+The Quotes service provides a method that allows you to generate quotes for Real-time transactions occurring on your integration.
+#### - Create a quote:
+This method is used for generating a quote.
+
+Usage example:
+```
+data := &fincra.CreateQuoteBody{
+  Action:              "send",
+  TransactionType:     "conversion",
+  FeeBearer:           "business",
+  PaymentDestination:  fincra.FliqPayWallet,
+  BeneficiaryType:     fincra.Individual,
+  Business:            "6457d39b12b4401f99a54772",
+  Amount:              "150",
+  DestinationCurrency: "USD",
+  SourceCurrency:      "NGN",
+}
+
+resp, err := client.CreateQuote(data);
+```
+
 ### Todos:
 - [x] Set up project with base client wrapper done, write tests
 - [x] update README with setup
 - [x] Business endpoints, tests and update README
 - [x] Beneficiaries endpoints, tests and update README
 - [ ] add faker emails, ids etc to test for avoiding dplicate error
-- [ ] Set up CI/CD with PR templates and auto tests for every build
 - [x] Conversions endpoints, tests and update README
-- [ ] Quotes endpoints, tests and update README
+- [x] Quotes endpoints, tests and update README
 - [ ] Collections endpoints, tests and update README
+- [ ] Set up CI/CD with PR templates and auto tests for every build
 - [ ] Payouts endpoints, tests and update README
 - [ ] Subaccounts endpoints, tests and update README
 - [ ] Verification endpoints, tests and update README
