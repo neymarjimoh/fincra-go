@@ -203,7 +203,7 @@ resp, err := client.CreateQuote(data);
 - [ ] Collections endpoints, tests and update README
 - [ ] Set up CI/CD with PR templates and auto tests for every build
 - [ ] Payouts endpoints, tests and update README
-- [ ] Subaccounts endpoints, tests and update README
+- [ ] Chargebacks endpoints, tests and update README
 - [ ] Verification endpoints, tests and update README
 - [ ] Subaccounts endpoints, tests and update README
 - [ ] Virtual accounts endpoints, tests and update README
