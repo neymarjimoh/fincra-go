@@ -192,6 +192,43 @@ data := &fincra.CreateQuoteBody{
 resp, err := client.CreateQuote(data);
 ```
 
+### 5. Chargebacks
+#### - List chargebacks:
+This method lets you list all the chargebacks incurred on your account.
+
+Usage example:
+```
+businessId := "6457d39b12b4401f99a54772"
+resp, err := client.ListChargeBacks(businessId)
+```
+
+#### - Accept a chargeback:
+This method lets you accept a chargeback
+
+Usage example:
+```
+data := &fincra.AcceptChargeBackDto{
+  BusinessId: "617fefbe4a68ec99ba6af0be",
+  ChargeBackId: "7171892",
+}
+
+resp, err := client.AcceptChargeBack(data);
+```
+
+#### - Reject a chargeback:
+This method lets you reject a chargeback
+
+Usage example:
+```
+data := &fincra.RejectChargeBackDto{
+  BusinessId: "617fefbe4a68ec99ba6af0be",
+  ChargeBackId: "7171892",
+  Reason: "no money on ground",
+}
+
+resp, err := client.RejectChargeBack(data);
+```
+
 ### Todos:
 - [x] Set up project with base client wrapper done, write tests
 - [x] update README with setup
@@ -203,7 +240,7 @@ resp, err := client.CreateQuote(data);
 - [ ] Collections endpoints, tests and update README
 - [ ] Set up CI/CD with PR templates and auto tests for every build
 - [ ] Payouts endpoints, tests and update README
-- [ ] Subaccounts endpoints, tests and update README
+- [x] Chargebacks endpoints, tests and update README
 - [ ] Verification endpoints, tests and update README
 - [ ] Subaccounts endpoints, tests and update README
 - [ ] Virtual accounts endpoints, tests and update README
