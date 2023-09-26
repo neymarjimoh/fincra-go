@@ -1,8 +1,10 @@
 package fincra
 
 import (
+	"context"
 	"net/url"
 	"testing"
+	"time"
 
 	"github.com/google/go-cmp/cmp"
 )
@@ -20,6 +22,9 @@ func TestClient(t *testing.T) {
 		"not speciying second parameter should return live url": {
 			NewClient("anotherlive"),
 		},
+		"speciying timeout should set the timeout": {
+			NewClient("timeoutset", WithTimeout(5*time.Second)),
+		},
 	}
 	var i = 0
 	for name, tc := range testCases {
@@ -31,6 +36,11 @@ func TestClient(t *testing.T) {
 			if tc.input.BaseUrl.String() != _url.String() {
 				t.Errorf("expected %v, got %v", _url, tc.input.BaseUrl)
 			}
+			if i == 3 {
+				if tc.input.HttpClient.Timeout != 5*time.Second {
+					t.Errorf("expected %v, got %v", 5*time.Second, tc.input.HttpClient.Timeout)
+				}
+			}
 			i++
 		})
 	}
@@ -38,7 +48,10 @@ func TestClient(t *testing.T) {
 
 func TestClientSendRequest(t *testing.T) {
 	t.Run("send request", func(t *testing.T) {
-		_, err := defaultTestClient().sendRequest("GET", "/", nil)
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+
+		_, err := defaultTestClient().sendRequest(ctx, "GET", "/", nil)
 		if err != nil {
 			t.Errorf("cannot send request %v", err)
 		}

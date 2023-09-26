@@ -1,6 +1,9 @@
 package fincra
 
-import "encoding/json"
+import (
+	"context"
+	"encoding/json"
+)
 
 // fetch the business id and other information of the merchant
 // client := fincra.NewClient(apiKey)
@@ -8,7 +11,10 @@ import "encoding/json"
 func (c *Client) GetBusinessId() (Response, error) {
 	path := "/profile/business/me"
 
-	response, err := c.sendRequest("GET", path, nil)
+	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
+	defer cancel()
+
+	response, err := c.sendRequest(ctx, "GET", path, nil)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 
