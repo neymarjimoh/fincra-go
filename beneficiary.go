@@ -1,6 +1,7 @@
 package fincra
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 )
@@ -18,7 +19,7 @@ const (
 	MobileMoneyWallet PaymentDestinationType = "mobile_money_wallet"
 	BankAccount       PaymentDestinationType = "bank_account"
 	CryptoWallet      PaymentDestinationType = "crypto_wallet"
-	FliqPayWallet      PaymentDestinationType = "fliqpay_wallet"
+	FliqPayWallet     PaymentDestinationType = "fliqpay_wallet"
 )
 
 //	beneficiary := CreateBeneficiaryBody{
@@ -129,7 +130,10 @@ func (c *Client) CreateBeneficiary(beneficiary *CreateBeneficiaryBody) (Response
 		UniqueIdentifier:   beneficiary.UniqueIdentifier,
 	}
 
-	response, err := c.sendRequest("POST", path, &request)
+	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
+	defer cancel()
+
+	response, err := c.sendRequest(ctx, "POST", path, &request)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 
@@ -157,7 +161,10 @@ func (c *Client) GetAllBeneficiaries(params *GetAllBeneficiariesParams) (Respons
 		PerPage: params.PerPage,
 	}
 
-	response, err := c.sendRequest("GET", path, &request)
+	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
+	defer cancel()
+
+	response, err := c.sendRequest(ctx, "GET", path, &request)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 
@@ -176,7 +183,10 @@ func (c *Client) GetBeneficiary(params *GetBeneficiaryParams) (Response, error) 
 
 	path := beneficiariesUrl + params.BusinessId + "/" + params.BeneficiaryId
 
-	response, err := c.sendRequest("GET", path, nil)
+	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
+	defer cancel()
+
+	response, err := c.sendRequest(ctx, "GET", path, nil)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 
@@ -210,7 +220,10 @@ func (c *Client) UpdateBeneficiary(body *UpdateBeneficiaryBody) (Response, error
 		UniqueIdentifier:   body.UniqueIdentifier,
 	}
 
-	response, err := c.sendRequest("PATCH", path, &request)
+	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
+	defer cancel()
+
+	response, err := c.sendRequest(ctx, "PATCH", path, &request)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 
@@ -229,7 +242,10 @@ func (c *Client) DeleteBeneficiary(params *GetBeneficiaryParams) (Response, erro
 
 	path := beneficiariesUrl + params.BusinessId + "/" + params.BeneficiaryId
 
-	response, err := c.sendRequest("DELETE", path, nil)
+	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
+	defer cancel()
+
+	response, err := c.sendRequest(ctx, "DELETE", path, nil)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 

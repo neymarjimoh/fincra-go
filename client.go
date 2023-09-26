@@ -2,6 +2,7 @@ package fincra
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -26,6 +27,12 @@ type Option func(c *Client)
 func WithSandbox(isSandbox bool) Option {
 	return func(c *Client) {
 		c.BaseUrl = getBaseUrl(isSandbox)
+	}
+}
+
+func WithTimeout(timeout time.Duration) Option {
+	return func(c *Client) {
+		c.HttpClient.Timeout = timeout
 	}
 }
 
@@ -58,7 +65,7 @@ type Response map[string]interface{}
 
 var jsonResponse Response
 
-func (c *Client) sendRequest(method, path string, payload interface{}) ([]byte, error) {
+func (c *Client) sendRequest(ctx context.Context, method, path string, payload interface{}) ([]byte, error) {
 	var buf io.ReadWriter
 	if payload != nil {
 		buf = new(bytes.Buffer)
@@ -70,7 +77,7 @@ func (c *Client) sendRequest(method, path string, payload interface{}) ([]byte, 
 
 	url := fmt.Sprintf("%s%s", c.BaseUrl.String(), path)
 
-	req, err := http.NewRequest(method, url, buf)
+	req, err := http.NewRequestWithContext(ctx, method, url, buf)
 	if err != nil {
 		return nil, fmt.Errorf("error instantiating request: %w", err)
 	}

@@ -1,6 +1,7 @@
 package fincra
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 )
@@ -21,7 +22,10 @@ type RejectChargeBackDto struct {
 func (c *Client) ListChargeBacks(businessId string) (Response, error) {
 	path := chargebacksUrl + "?business=" + businessId
 
-	response, err := c.sendRequest("GET", path, nil)
+	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
+	defer cancel()
+
+	response, err := c.sendRequest(ctx, "GET", path, nil)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 
@@ -39,7 +43,10 @@ func (c *Client) AcceptChargeBack(body *AcceptChargeBackDto) (Response, error) {
 
 	path := chargebacksUrl + "/" + body.ChargeBackId + "/accept?business=" + body.BusinessId
 
-	response, err := c.sendRequest("PATCH", path, nil)
+	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
+	defer cancel()
+
+	response, err := c.sendRequest(ctx, "PATCH", path, nil)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 
@@ -61,7 +68,10 @@ func (c *Client) RejectChargeBack(body *RejectChargeBackDto) (Response, error) {
 
 	path := chargebacksUrl + "/" + body.ChargeBackId + "/reject?business=" + body.BusinessId
 
-	response, err := c.sendRequest("PATCH", path, body)
+	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
+	defer cancel()
+
+	response, err := c.sendRequest(ctx, "PATCH", path, body)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 
