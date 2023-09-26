@@ -236,6 +236,7 @@ resp, err := client.RejectChargeBack(data);
 - [x] Beneficiaries endpoints, tests and update README
 - [ ] add faker emails, ids etc to test for avoiding dplicate error
 - [x] Conversions endpoints, tests and update README
+- [ ] Add context to the client methods
 - [x] Quotes endpoints, tests and update README
 - [ ] Collections endpoints, tests and update README
 - [ ] Set up CI/CD with PR templates and auto tests for every build
