@@ -65,7 +65,18 @@ type Response map[string]interface{}
 
 var jsonResponse Response
 
-func (c *Client) sendRequest(ctx context.Context, method, path string, payload interface{}) ([]byte, error) {
+func (c *Client) sendRequest(method, path string, payload interface{}, ctx ...context.Context) ([]byte, error) {
+	defaultCtx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
+	defer cancel()
+
+	var effectiveCtx context.Context
+
+	if len(ctx) > 0 {
+		effectiveCtx = ctx[0]
+	} else {
+		effectiveCtx = defaultCtx
+	}
+
 	var buf io.ReadWriter
 	if payload != nil {
 		buf = new(bytes.Buffer)
@@ -77,7 +88,7 @@ func (c *Client) sendRequest(ctx context.Context, method, path string, payload i
 
 	url := fmt.Sprintf("%s%s", c.BaseUrl.String(), path)
 
-	req, err := http.NewRequestWithContext(ctx, method, url, buf)
+	req, err := http.NewRequestWithContext(effectiveCtx, method, url, buf)
 	if err != nil {
 		return nil, fmt.Errorf("error instantiating request: %w", err)
 	}

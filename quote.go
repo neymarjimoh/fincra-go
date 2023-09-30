@@ -1,7 +1,6 @@
 package fincra
 
 import (
-	"context"
 	"encoding/json"
 )
 
@@ -31,10 +30,7 @@ type CreateQuoteBody struct {
 func (c *Client) CreateQuote(quote *CreateQuoteBody) (Response, error) {
 	path := "/quotes/generate"
 
-	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
-	defer cancel()
-
-	response, err := c.sendRequest(ctx, "POST", path, quote)
+	response, err := c.sendRequest("POST", path, quote)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 
