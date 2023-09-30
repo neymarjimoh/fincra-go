@@ -243,7 +243,6 @@ resp, err := client.RejectChargeBack(data);
 - [ ] Payouts endpoints, tests and update README
 - [x] Chargebacks endpoints, tests and update README
 - [ ] Verification endpoints, tests and update README
-- [ ] Subaccounts endpoints, tests and update README
 - [ ] Virtual accounts endpoints, tests and update README
 - [ ] Wallets endpoints, tests and update README
 - [ ] Add link to contributions guide on README
