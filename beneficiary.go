@@ -1,7 +1,6 @@
 package fincra
 
 import (
-	"context"
 	"encoding/json"
 	"errors"
 )
@@ -130,10 +129,7 @@ func (c *Client) CreateBeneficiary(beneficiary *CreateBeneficiaryBody) (Response
 		UniqueIdentifier:   beneficiary.UniqueIdentifier,
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
-	defer cancel()
-
-	response, err := c.sendRequest(ctx, "POST", path, &request)
+	response, err := c.sendRequest("POST", path, &request)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 
@@ -161,10 +157,7 @@ func (c *Client) GetAllBeneficiaries(params *GetAllBeneficiariesParams) (Respons
 		PerPage: params.PerPage,
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
-	defer cancel()
-
-	response, err := c.sendRequest(ctx, "GET", path, &request)
+	response, err := c.sendRequest("GET", path, &request)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 
@@ -183,10 +176,7 @@ func (c *Client) GetBeneficiary(params *GetBeneficiaryParams) (Response, error) 
 
 	path := beneficiariesUrl + params.BusinessId + "/" + params.BeneficiaryId
 
-	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
-	defer cancel()
-
-	response, err := c.sendRequest(ctx, "GET", path, nil)
+	response, err := c.sendRequest("GET", path, nil)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 
@@ -220,10 +210,7 @@ func (c *Client) UpdateBeneficiary(body *UpdateBeneficiaryBody) (Response, error
 		UniqueIdentifier:   body.UniqueIdentifier,
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
-	defer cancel()
-
-	response, err := c.sendRequest(ctx, "PATCH", path, &request)
+	response, err := c.sendRequest("PATCH", path, &request)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 
@@ -242,10 +229,7 @@ func (c *Client) DeleteBeneficiary(params *GetBeneficiaryParams) (Response, erro
 
 	path := beneficiariesUrl + params.BusinessId + "/" + params.BeneficiaryId
 
-	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
-	defer cancel()
-
-	response, err := c.sendRequest(ctx, "DELETE", path, nil)
+	response, err := c.sendRequest("DELETE", path, nil)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 

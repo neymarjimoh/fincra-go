@@ -1,7 +1,6 @@
 package fincra
 
 import (
-	"context"
 	"encoding/json"
 )
 
@@ -11,10 +10,7 @@ import (
 func (c *Client) GetBusinessId() (Response, error) {
 	path := "/profile/business/me"
 
-	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
-	defer cancel()
-
-	response, err := c.sendRequest(ctx, "GET", path, nil)
+	response, err := c.sendRequest("GET", path, nil)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 

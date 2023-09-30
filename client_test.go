@@ -1,7 +1,6 @@
 package fincra
 
 import (
-	"context"
 	"net/url"
 	"testing"
 	"time"
@@ -48,10 +47,7 @@ func TestClient(t *testing.T) {
 
 func TestClientSendRequest(t *testing.T) {
 	t.Run("send request", func(t *testing.T) {
-		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-		defer cancel()
-
-		_, err := defaultTestClient().sendRequest(ctx, "GET", "/", nil)
+		_, err := defaultTestClient().sendRequest("GET", "/", nil)
 		if err != nil {
 			t.Errorf("cannot send request %v", err)
 		}

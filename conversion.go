@@ -1,7 +1,6 @@
 package fincra
 
 import (
-	"context"
 	"encoding/json"
 	"errors"
 )
@@ -16,10 +15,7 @@ type CreateConversionBody struct {
 func (c *Client) GetBusinessConversions(businessId string) (Response, error) {
 	path := converisionsUrl + "?business=" + businessId
 
-	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
-	defer cancel()
-
-	response, err := c.sendRequest(ctx, "GET", path, nil)
+	response, err := c.sendRequest("GET", path, nil)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 
@@ -36,10 +32,7 @@ func (c *Client) CreateConversion(conversion *CreateConversionBody) (Response, e
 	}
 	path := converisionsUrl + "/initiate"
 
-	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
-	defer cancel()
-
-	response, err := c.sendRequest(ctx, "POST", path, conversion)
+	response, err := c.sendRequest("POST", path, conversion)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 
@@ -49,10 +42,7 @@ func (c *Client) CreateConversion(conversion *CreateConversionBody) (Response, e
 func (c *Client) GetConversion(conversionId string) (Response, error) {
 	path := converisionsUrl + "/" + conversionId
 
-	ctx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
-	defer cancel()
-
-	response, err := c.sendRequest(ctx, "GET", path, nil)
+	response, err := c.sendRequest("GET", path, nil)
 
 	_ = json.Unmarshal(response, &jsonResponse)
 
