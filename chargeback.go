@@ -8,13 +8,13 @@ import (
 const chargebacksUrl = "/collections/chargebacks"
 
 type AcceptChargeBackDto struct {
-	ChargeBackId string `json":"chargeBackId"`
-	BusinessId   string `json":"businessId"`
+	ChargeBackId string `json:"chargeBackId"`
+	BusinessId   string `json:"businessId"`
 }
 
 type RejectChargeBackDto struct {
-	ChargeBackId string `json":"chargeBackId"`
-	BusinessId   string `json":"businessId"`
+	ChargeBackId string `json:"chargeBackId"`
+	BusinessId   string `json:"businessId"`
 	Reason       string `json:"business_reject_reason"`
 }
 
