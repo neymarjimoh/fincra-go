@@ -137,9 +137,11 @@ func (c *Client) CreateBeneficiary(beneficiary *CreateBeneficiaryBody) (Response
 }
 
 // Get all beneficiaries for a business
+const businessIdRequiredError = "businessId is required to fetch the beneficiary"
+
 func (c *Client) GetAllBeneficiaries(params *GetAllBeneficiariesParams) (Response, error) {
 	if params.BusinessId == "" {
-		return Response{}, errors.New("businessId is required to fetch the beneficiary")
+		return Response{}, errors.New(businessIdRequiredError)
 	}
 
 	if params.Page == "" {
@@ -167,7 +169,7 @@ func (c *Client) GetAllBeneficiaries(params *GetAllBeneficiariesParams) (Respons
 // Get a benefiiciary from a business
 func (c *Client) GetBeneficiary(params *GetBeneficiaryParams) (Response, error) {
 	if params.BusinessId == "" {
-		return Response{}, errors.New("businessId is required to fetch the beneficiary")
+		return Response{}, errors.New(businessIdRequiredError)
 	}
 
 	if params.BeneficiaryId == "" {
