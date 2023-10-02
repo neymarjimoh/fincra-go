@@ -292,6 +292,37 @@ data := fincra.LogsDto{
 resp, err := client.ListWalletLogs(data)
 ```
 
+### 6. Identity Management
+#### - Verify account number:
+This method lets you verify a bank account
+
+Usage example:
+
+```
+data := fincra.VerifyBankAccountBody{
+ AccountNumber: "0929292929",
+ Type:          fincra.Nuban, // it can be fincra.Iban
+ BankCode:      "044",
+ Iban:          "999",
+}
+
+resp, err := client.VerifyBankAccount(data)
+```
+
+#### - BVN Resolution:
+This method lets you verify a bank account
+
+Usage example:
+
+```
+data := fincra.VerifyBVNBody{
+ Bvn:      "09292929221",
+ Business: "6457d39b12b4401f99a54772",
+}
+
+resp, err := client.VerifyBVN(data)
+```
+
 ### Todos:
 - [x] Set up project with base client wrapper done, write tests
 - [x] update README with setup
@@ -302,11 +333,11 @@ resp, err := client.ListWalletLogs(data)
 - [x] Quotes endpoints, tests and update README
 - [x] Chargebacks endpoints, tests and update README
 - [x] Wallets endpoints, tests and update README
+- [x] Verification endpoints, tests and update README
 - [ ] Collections endpoints, tests and update README
 - [ ] Set up CI/CD with PR templates and auto tests for every build
 - [ ] Payouts endpoints, tests and update README
 - [ ] add faker emails, ids etc to test for avoiding duplicate error
-- [ ] Verification endpoints, tests and update README
 - [ ] Virtual accounts endpoints, tests and update README
 - [ ] Add link to contributions guide on README
 - [ ] Update README completely for easy usage (re-arrange based on the API reference)
