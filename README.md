@@ -292,7 +292,7 @@ data := fincra.LogsDto{
 resp, err := client.ListWalletLogs(data)
 ```
 
-### 6. Identity Management
+### 7. Identity Management
 #### - Verify account number:
 This method lets you verify a bank account
 
