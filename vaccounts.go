@@ -20,7 +20,7 @@ type CreateVirtualAccountDto struct {
 	Channel                string            `json:"channel"`
 }
 
-type KYCInformation struct {
+type KYCInformationDto struct {
 	FirstName        string `json:"firstName,omitempty"`
 	LastName         string `json:"lastName,omitempty"`
 	Email            string `json:"email,omitempty"`
