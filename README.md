@@ -1,6 +1,8 @@
 # Fincra Golang SDK
 An unofficial Go SDK for working with [Fincra API](https://fincra.com/)
 
+[![fincra-go-sdk](https://github.com/neymarjimoh/fincra-go/actions/workflows/go.yml/badge.svg)](https://github.com/neymarjimoh/fincra-go/actions/workflows/go.yml)
+
 ## Installation
 #### To install, run:
 
