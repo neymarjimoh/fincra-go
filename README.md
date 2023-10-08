@@ -334,11 +334,11 @@ resp, err := client.VerifyBVN(data)
 - [x] Chargebacks endpoints, tests and update README
 - [x] Wallets endpoints, tests and update README
 - [x] Verification endpoints, tests and update README
+- [ ] Virtual accounts endpoints, tests and update README
 - [ ] Collections endpoints, tests and update README
 - [ ] Set up CI/CD with PR templates and auto tests for every build
 - [ ] Payouts endpoints, tests and update README
 - [ ] add faker emails, ids etc to test for avoiding duplicate error
-- [ ] Virtual accounts endpoints, tests and update README
 - [ ] Add link to contributions guide on README
 - [ ] Update README completely for easy usage (re-arrange based on the API reference)
 - [ ] Test as a user and see how it works, fix bug fixes and prepare for first release

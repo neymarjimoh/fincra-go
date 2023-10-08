@@ -24,3 +24,21 @@ func ExcludeField[T interface{}](input T, fieldName string) T {
 
 	return outputValue.Interface().(T)
 }
+
+func IsEmpty(obj interface{}) bool {
+	value := reflect.ValueOf(obj)
+	if value.Kind() != reflect.Struct {
+		panic("Input is not a struct")
+	}
+
+	for i := 0; i < value.NumField(); i++ {
+		fieldValue := value.Field(i)
+		zeroValue := reflect.Zero(fieldValue.Type())
+
+		if !reflect.DeepEqual(fieldValue.Interface(), zeroValue.Interface()) {
+			return false
+		}
+	}
+
+	return true
+}

@@ -18,7 +18,7 @@ func TestClient(t *testing.T) {
 		"speciying sandbox false should return live url": {
 			NewClient("live", WithSandbox(false)),
 		},
-		"not speciying second parameter should return live url": {
+		"not specifying second parameter should return live url": {
 			NewClient("anotherlive"),
 		},
 		"speciying timeout should set the timeout": {
