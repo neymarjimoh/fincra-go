@@ -325,6 +325,81 @@ data := fincra.VerifyBVNBody{
 resp, err := client.VerifyBVN(data)
 ```
 
+### 8. Virtual Account
+#### - Create a virtual account [here](https://docs.fincra.com/reference/request-virtual-accounts):
+This method lets you create NGN and MCY virtual accounts. You’ll need to complete currency-specific fields as well as shared fields applicable to all currencies. E.g firstName and lastName are applicable to both NGN and MCY account requests while meansofID is applicable to only MCY accounts.
+
+Usage example:
+
+```
+data := fincra.CreateVirtualAccountDto{
+ Currency:    "NGN",
+ UtilityBill: "https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg",
+ AccountType: "individual",
+ KYCInformation: fincra.KYCInformationDto{
+  FirstName:    "John",
+  LastName:     "Doe",
+  Email:        "abc@abc.com",
+  BusinessName: "JohnDoe",
+ },
+ Channel: "providus",
+}
+
+resp, err := client.CreateVirtualAccount(data)
+```
+
+#### - List virtual accounts [here](https://docs.fincra.com/reference/get-merchant-virtual-account-requests):
+This method fetches all virtual accounts belonging to a merchant.
+
+Usage example:
+
+```
+options := fincra.Options{
+ Currency:    "NGN",
+}
+
+resp, err := client.ListVirtualAccounts(options)
+```
+*N/B*: In `Options`, one or more of `Currency`, `BusinessName`, `IssuedDate`, `RequestedDate`, `AccountNumber` and `Status` must be passed as payload.
+
+#### - List virtual account requests [here](https://docs.fincra.com/reference/get-virtual-account-requests):
+This method is used for getting all account requests belonging to a merchant.
+
+Usage example:
+
+```
+resp, err := client.ListVirtualAccountRequests()
+```
+
+#### - Fetch a virtual account by currency [here](https://docs.fincra.com/reference/get-merchant-virtual-account-by-currency):
+This method is used for retrieving an account that is belongs to a merchant by currency.
+
+Usage example:
+
+```
+resp, err := client.ListVirtualAccountByCurrency("EUR")
+```
+
+#### - Fetch a virtual account by BVN [here](https://docs.fincra.com/reference/fetch-a-virtual-account-by-bvn):
+This method is used for retrieving an account that is belongs to a merchant by BVN.
+
+Usage example:
+Accepts two parameters. First parameter represents the BVN and second represents the business ID.
+
+```
+resp, err := client.ListVirtualAccountByBvn("0123456789", "6457d39b12b4401f99a54772")
+```
+
+#### - Fetch a virtual account [here](https://docs.fincra.com/reference/get-one-virtual-account):
+This method is used for retrieving a virtual account.
+
+Usage example:
+Accepts a parameter that represents the Virtual Account ID.
+
+```
+resp, err := client.ListVirtualAccount("6457d39b12b4401f99a54772")
+```
+
 ### Todos:
 - [x] Set up project with base client wrapper done, write tests
 - [x] update README with setup
@@ -336,10 +411,11 @@ resp, err := client.VerifyBVN(data)
 - [x] Chargebacks endpoints, tests and update README
 - [x] Wallets endpoints, tests and update README
 - [x] Verification endpoints, tests and update README
-- [ ] Virtual accounts endpoints, tests and update README
-- [ ] Collections endpoints, tests and update README
+- [x] Virtual accounts endpoints, tests and update README
+- [ ] Payins endpoints, tests and update README
 - [ ] Set up CI/CD with PR templates and auto tests for every build
 - [ ] Payouts endpoints, tests and update README
+- [ ] Checkouts endpoints, tests and update README
 - [ ] add faker emails, ids etc to test for avoiding duplicate error
 - [ ] Add link to contributions guide on README
 - [ ] Update README completely for easy usage (re-arrange based on the API reference)
