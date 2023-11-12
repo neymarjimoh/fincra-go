@@ -1,7 +1,6 @@
 package fincra
 
 import (
-	"encoding/json"
 	"errors"
 )
 
@@ -129,11 +128,7 @@ func (c *Client) CreateBeneficiary(beneficiary *CreateBeneficiaryBody) (Response
 		UniqueIdentifier:   beneficiary.UniqueIdentifier,
 	}
 
-	response, err := c.sendRequest("POST", path, &request)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("POST", path, &request)
 }
 
 // Get all beneficiaries for a business
@@ -159,11 +154,7 @@ func (c *Client) GetAllBeneficiaries(params *GetAllBeneficiariesParams) (Respons
 		PerPage: params.PerPage,
 	}
 
-	response, err := c.sendRequest("GET", path, &request)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("GET", path, &request)
 }
 
 // Get a benefiiciary from a business
@@ -178,11 +169,7 @@ func (c *Client) GetBeneficiary(params *GetBeneficiaryParams) (Response, error) 
 
 	path := beneficiariesUrl + params.BusinessId + "/" + params.BeneficiaryId
 
-	response, err := c.sendRequest("GET", path, nil)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("GET", path, nil)
 }
 
 // update a beneficiary of a business
@@ -212,11 +199,7 @@ func (c *Client) UpdateBeneficiary(body *UpdateBeneficiaryBody) (Response, error
 		UniqueIdentifier:   body.UniqueIdentifier,
 	}
 
-	response, err := c.sendRequest("PATCH", path, &request)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("PATCH", path, &request)
 }
 
 // delete a beneficiary of a business
@@ -231,9 +214,5 @@ func (c *Client) DeleteBeneficiary(params *GetBeneficiaryParams) (Response, erro
 
 	path := beneficiariesUrl + params.BusinessId + "/" + params.BeneficiaryId
 
-	response, err := c.sendRequest("DELETE", path, nil)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("DELETE", path, nil)
 }

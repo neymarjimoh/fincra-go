@@ -1,9 +1,5 @@
 package fincra
 
-import (
-	"encoding/json"
-)
-
 type ActionType string
 
 const (
@@ -25,11 +21,7 @@ func (c *Client) ListWallets(businessId string) (Response, error) {
 
 	path := walletUrl + "?businessID=" + businessId
 
-	response, err := c.sendRequest("GET", path, nil)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("GET", path, nil)
 }
 
 // provides information to the merchant about a specific account balance
@@ -37,11 +29,7 @@ func (c *Client) ListWallet(id string) (Response, error) {
 
 	path := walletUrl + "/" + id
 
-	response, err := c.sendRequest("GET", path, nil)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("GET", path, nil)
 }
 
 // fetches all pay-ins and pay-outs that occurred on your integration
@@ -49,9 +37,5 @@ func (c *Client) ListWalletLogs(logData LogsDto) (Response, error) {
 
 	path := walletUrl + "/logs"
 
-	response, err := c.sendRequest("GET", path, logData)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("GET", path, logData)
 }
