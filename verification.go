@@ -1,9 +1,5 @@
 package fincra
 
-import (
-	"encoding/json"
-)
-
 type Type string
 
 const (
@@ -28,20 +24,12 @@ type VerifyBVNBody struct {
 func (c *Client) VerifyBankAccount(verifyData VerifyBankAccountBody) (Response, error) {
 	path := verificationUrl + "accounts/resolve"
 
-	response, err := c.sendRequest("POST", path, verifyData)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("POST", path, verifyData)
 }
 
 // lets you verify a BVN
 func (c *Client) VerifyBVN(verifyData VerifyBVNBody) (Response, error) {
 	path := verificationUrl + "bvn-verification"
 
-	response, err := c.sendRequest("POST", path, verifyData)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("POST", path, verifyData)
 }

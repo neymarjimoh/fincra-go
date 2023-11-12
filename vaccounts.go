@@ -1,7 +1,6 @@
 package fincra
 
 import (
-	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -63,11 +62,7 @@ func (c *Client) CreateVirtualAccount(data CreateVirtualAccountDto) (Response, e
 
 	path := virtualAccountUrl + "/requests"
 
-	response, err := c.sendRequest("POST", path, data)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("POST", path, data)
 }
 
 // read here https://docs.fincra.com/reference/get-merchant-virtual-account-requests for more info on this method
@@ -102,53 +97,33 @@ func (c *Client) ListVirtualAccounts(options Options) (Response, error) {
 		path += "?" + strings.Join(queryParameters, "&")
 	}
 
-	response, err := c.sendRequest("GET", path, nil)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("GET", path, nil)
 }
 
 // This method is used for getting all account requests belonging to a merchant
 func (c *Client) ListVirtualAccountRequests() (Response, error) {
 	path := virtualAccountUrl + "requests"
 
-	response, err := c.sendRequest("GET", path, nil)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("GET", path, nil)
 }
 
 // This method is used for retrieving an account that is belongs to a merchant by currency
 func (c *Client) ListVirtualAccountByCurrency(currency string) (Response, error) {
 	path := virtualAccountUrl + "?currency=" + currency
 
-	response, err := c.sendRequest("GET", path, nil)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("GET", path, nil)
 }
 
 // This method is used for retrieving an account that is belongs to a merchant by BVN
 func (c *Client) ListVirtualAccountByBvn(bvn, businessId string) (Response, error) {
 	path := virtualAccountUrl + "/bvn?bvn=" + bvn + "&business=" + businessId
 
-	response, err := c.sendRequest("GET", path, nil)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("GET", path, nil)
 }
 
 // This method is used for retrieving a virtual account
 func (c *Client) ListVirtualAccount(accountId string) (Response, error) {
 	path := virtualAccountUrl + "/virtual-accounts/" + accountId
 
-	response, err := c.sendRequest("GET", path, nil)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("GET", path, nil)
 }

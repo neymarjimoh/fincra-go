@@ -63,9 +63,7 @@ func getBaseUrl(sandbox bool) *url.URL {
 
 type Response map[string]interface{}
 
-var jsonResponse Response
-
-func (c *Client) sendRequest(method, path string, payload interface{}, ctx ...context.Context) ([]byte, error) {
+func (c *Client) sendRequest(method, path string, payload interface{}, ctx ...context.Context) (Response, error) {
 	defaultCtx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
 	defer cancel()
 
@@ -109,5 +107,8 @@ func (c *Client) sendRequest(method, path string, payload interface{}, ctx ...co
 		return nil, fmt.Errorf("cannot read response from body: %w", err)
 	}
 
-	return responseBody, nil
+	var jsonResponse Response
+	_ = json.Unmarshal(responseBody, &jsonResponse)
+
+	return jsonResponse, nil
 }

@@ -1,7 +1,6 @@
 package fincra
 
 import (
-	"encoding/json"
 	"errors"
 )
 
@@ -15,11 +14,7 @@ type CreateConversionBody struct {
 func (c *Client) GetBusinessConversions(businessId string) (Response, error) {
 	path := converisionsUrl + "?business=" + businessId
 
-	response, err := c.sendRequest("GET", path, nil)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("GET", path, nil)
 }
 
 func (c *Client) CreateConversion(conversion *CreateConversionBody) (Response, error) {
@@ -32,19 +27,11 @@ func (c *Client) CreateConversion(conversion *CreateConversionBody) (Response, e
 	}
 	path := converisionsUrl + "/initiate"
 
-	response, err := c.sendRequest("POST", path, conversion)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("POST", path, conversion)
 }
 
 func (c *Client) GetConversion(conversionId string) (Response, error) {
 	path := converisionsUrl + "/" + conversionId
 
-	response, err := c.sendRequest("GET", path, nil)
-
-	_ = json.Unmarshal(response, &jsonResponse)
-
-	return jsonResponse, err
+	return c.sendRequest("GET", path, nil)
 }
