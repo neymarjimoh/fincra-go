@@ -401,24 +401,6 @@ resp, err := client.ListVirtualAccount("6457d39b12b4401f99a54772")
 ```
 
 ### Todos:
-- [x] Set up project with base client wrapper done, write tests
-- [x] update README with setup
-- [x] Business endpoints, tests and update README
-- [x] Beneficiaries endpoints, tests and update README
-- [x] Conversions endpoints, tests and update README
-- [x] Add context to the client methods
-- [x] Quotes endpoints, tests and update README
-- [x] Chargebacks endpoints, tests and update README
-- [x] Wallets endpoints, tests and update README
-- [x] Verification endpoints, tests and update README
-- [x] Virtual accounts endpoints, tests and update README
 - [ ] Payins endpoints, tests and update README
-- [ ] Set up CI/CD with PR templates and auto tests for every build
 - [ ] Payouts endpoints, tests and update README
 - [ ] Checkouts endpoints, tests and update README
-- [ ] add faker emails, ids etc to test for avoiding duplicate error
-- [ ] Add link to contributions guide on README
-- [ ] Update README completely for easy usage (re-arrange based on the API reference)
-- [ ] Test as a user and see how it works, fix bug fixes and prepare for first release
-- [ ] Make public and stay jiggy with more grinding
-- [ ] Build and deploy a release after review from some devs
