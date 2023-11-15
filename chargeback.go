@@ -1,6 +1,7 @@
 package fincra
 
 import (
+	"context"
 	"errors"
 )
 
@@ -17,13 +18,13 @@ type RejectChargeBackDto struct {
 	Reason       string `json:"business_reject_reason"`
 }
 
-func (c *Client) ListChargeBacks(businessId string) (Response, error) {
+func (c *Client) ListChargeBacks(ctx context.Context, businessId string) (Response, error) {
 	path := chargebacksUrl + "?business=" + businessId
 
-	return c.sendRequest("GET", path, nil)
+	return c.sendRequest(ctx, "GET", path, nil)
 }
 
-func (c *Client) AcceptChargeBack(body *AcceptChargeBackDto) (Response, error) {
+func (c *Client) AcceptChargeBack(ctx context.Context, body *AcceptChargeBackDto) (Response, error) {
 	if body.BusinessId == "" {
 		return Response{}, errors.New("businessId is required to accept the chargeback")
 	}
@@ -34,10 +35,10 @@ func (c *Client) AcceptChargeBack(body *AcceptChargeBackDto) (Response, error) {
 
 	path := chargebacksUrl + "/" + body.ChargeBackId + "/accept?business=" + body.BusinessId
 
-	return c.sendRequest("PATCH", path, nil)
+	return c.sendRequest(ctx, "PATCH", path, nil)
 }
 
-func (c *Client) RejectChargeBack(body *RejectChargeBackDto) (Response, error) {
+func (c *Client) RejectChargeBack(ctx context.Context, body *RejectChargeBackDto) (Response, error) {
 	if body.BusinessId == "" {
 		return Response{}, errors.New("businessId is required to reject the chargeback")
 	}
@@ -52,5 +53,5 @@ func (c *Client) RejectChargeBack(body *RejectChargeBackDto) (Response, error) {
 
 	path := chargebacksUrl + "/" + body.ChargeBackId + "/reject?business=" + body.BusinessId
 
-	return c.sendRequest("PATCH", path, body)
+	return c.sendRequest(ctx, "PATCH", path, body)
 }

@@ -1,6 +1,7 @@
 package fincra
 
 import (
+	"context"
 	"fmt"
 	"testing"
 )
@@ -8,8 +9,9 @@ import (
 func TestGetWallets(t *testing.T) {
 	t.Run("fetch wallets", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
-		resp, err := client.ListWallets("6457d39b12b4401f99a54772")
+		resp, err := client.ListWallets(ctx, "6457d39b12b4401f99a54772")
 		if err != nil {
 			t.Errorf("error fetching wallets info: %v", err)
 		}
@@ -35,8 +37,9 @@ func TestGetWallets(t *testing.T) {
 func TestGetWallet(t *testing.T) {
 	t.Run("fetch wallet", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
-		resp, err := client.ListWallet("66433")
+		resp, err := client.ListWallet(ctx, "66433")
 		if err != nil {
 			t.Errorf("error fetching wallet info: %v", err)
 		}
@@ -62,6 +65,7 @@ func TestGetWallet(t *testing.T) {
 func TestGetWalletLogs(t *testing.T) {
 	t.Run("fetch wallet logs", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
 		request := LogsDto{
 			Business: "6457d39b12b4401f99a54772",
@@ -71,7 +75,7 @@ func TestGetWalletLogs(t *testing.T) {
 			Amount:   "500",
 		}
 
-		resp, err := client.ListWalletLogs(request)
+		resp, err := client.ListWalletLogs(ctx, request)
 		if err != nil {
 			t.Errorf("error fetching wallet info: %v", err)
 		}

@@ -1,6 +1,7 @@
 package fincra
 
 import (
+	"context"
 	"errors"
 )
 
@@ -11,13 +12,13 @@ type CreateConversionBody struct {
 	QuoteReference string `json:"quoteReference"`
 }
 
-func (c *Client) GetBusinessConversions(businessId string) (Response, error) {
+func (c *Client) GetBusinessConversions(ctx context.Context, businessId string) (Response, error) {
 	path := converisionsUrl + "?business=" + businessId
 
-	return c.sendRequest("GET", path, nil)
+	return c.sendRequest(ctx, "GET", path, nil)
 }
 
-func (c *Client) CreateConversion(conversion *CreateConversionBody) (Response, error) {
+func (c *Client) CreateConversion(ctx context.Context, conversion *CreateConversionBody) (Response, error) {
 	if conversion.BusinessId == "" {
 		return Response{}, errors.New("business is required to convert a currency")
 	}
@@ -27,11 +28,11 @@ func (c *Client) CreateConversion(conversion *CreateConversionBody) (Response, e
 	}
 	path := converisionsUrl + "/initiate"
 
-	return c.sendRequest("POST", path, conversion)
+	return c.sendRequest(ctx, "POST", path, conversion)
 }
 
-func (c *Client) GetConversion(conversionId string) (Response, error) {
+func (c *Client) GetConversion(ctx context.Context, conversionId string) (Response, error) {
 	path := converisionsUrl + "/" + conversionId
 
-	return c.sendRequest("GET", path, nil)
+	return c.sendRequest(ctx, "GET", path, nil)
 }

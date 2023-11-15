@@ -37,6 +37,9 @@ newClient := fincra.NewClient(SECRET_KEY, fincra.WithSandbox(true))
 
 // to indicate http request timeout to use, use `WithTimeout()`
 newClient := fincra.NewClient(SECRET_KEY, fincra.WithTimeout(5*time.Second))
+
+// to create a context for library functions
+ctx := context.Background()
 ```
 
 Note:
@@ -57,7 +60,7 @@ This method lets you retrieve the unique Identifier of your business and other i
 Usage example:
 
 ```go
-resp, err := client.GetBusinessId()
+resp, err := client.GetBusinessId(ctx)
 ```
 
 ### 2. Beneficiaries
@@ -96,7 +99,7 @@ data := &fincra.CreateBeneficiaryBody{
   BusinessId: "6457d39b12b4401f99a54772",
 }
 
-resp, err := client.CreateBeneficiary(data)
+resp, err := client.CreateBeneficiary(ctx, data)
 ```
 
 **NOTE**: PaymentDestination accepts an enum of CryptoWallet (crypto_wallet), BankAccount (bank_account) or MobileMoneyWallet (mobile_money_wallet)
@@ -114,7 +117,7 @@ data := &fincra.GetAllBeneficiariesParams{
   PerPage: "20", // optional, defaults to 10
 }
 
-resp, err := client.GetAllBeneficiaries(data);
+resp, err := client.GetAllBeneficiaries(ctx, data);
 ```
 
 #### - List beneficiaries:
@@ -129,7 +132,7 @@ data := &fincra.GetBeneficiaryParams{
   BeneficiaryId: "618fefbe4a68ec99ba5af0be",
 }
 
-resp, err := client.GetBeneficiary(data);
+resp, err := client.GetBeneficiary(ctx, data);
 ```
 
 #### - Update a beneficiary:
@@ -150,7 +153,7 @@ data := &fincra.UpdateBeneficiaryBody{
   BeneficiaryId: "646db15a8cdec23981165184",
 }
 
-resp, err := client.UpdateBeneficiary(data)
+resp, err := client.UpdateBeneficiary(ctx, data)
 ```
 
 More details about the parameters for the above method [here](https://docs.fincra.com/reference/update-a-beneficiary)
@@ -184,7 +187,7 @@ data := &fincra.CreateConversionBody{
   QuoteReference: "124246677268282782728",
 }
 
-resp, err := client.CreateConversion(data);
+resp, err := client.CreateConversion(ctx, data);
 ```
 
 #### - List conversions:
@@ -195,7 +198,7 @@ Usage example:
 
 ```go
 businessId := "617fefbe4a68ec99ba6af0be"
-resp, err := client.GetBusinessConversions(businessId);
+resp, err := client.GetBusinessConversions(ctx, businessId);
 ```
 
 #### - Fetch a conversion:
@@ -206,7 +209,7 @@ Usage example:
 
 ```go
 conversionId := "617fefbe4a68ec99ba6af0bh"
-resp, err := client.GetConversion(conversionId);
+resp, err := client.GetConversion(ctx, conversionId);
 ```
 
 ### 4. Quotes
@@ -232,7 +235,7 @@ data := &fincra.CreateQuoteBody{
   SourceCurrency:      "NGN",
 }
 
-resp, err := client.CreateQuote(data);
+resp, err := client.CreateQuote(ctx, data);
 ```
 
 ### 5. Chargebacks
@@ -245,7 +248,7 @@ Usage example:
 
 ```go
 businessId := "6457d39b12b4401f99a54772"
-resp, err := client.ListChargeBacks(businessId)
+resp, err := client.ListChargeBacks(ctx, businessId)
 ```
 
 #### - Accept a chargeback:
@@ -260,7 +263,7 @@ data := &fincra.AcceptChargeBackDto{
   ChargeBackId: "7171892",
 }
 
-resp, err := client.AcceptChargeBack(data)
+resp, err := client.AcceptChargeBack(ctx, data)
 ```
 
 #### - Reject a chargeback:
@@ -276,7 +279,7 @@ data := &fincra.RejectChargeBackDto{
   Reason: "no money on ground",
 }
 
-resp, err := client.RejectChargeBack(data)
+resp, err := client.RejectChargeBack(ctx, data)
 ```
 
 ### 6. Wallets (Balance)
@@ -289,7 +292,7 @@ Usage example:
 
 ```go
 businessId := "6457d39b12b4401f99a54772"
-resp, err := client.ListWallets(businessId)
+resp, err := client.ListWallets(ctx, businessId)
 ```
 
 #### - Fetch a blance:
@@ -300,7 +303,7 @@ Usage example:
 
 ```go
 walletId := "66433"
-resp, err := client.ListWallet(walletId)
+resp, err := client.ListWallet(ctx, walletId)
 ```
 
 #### - List account balance logs:
@@ -318,7 +321,7 @@ data := fincra.LogsDto{
  Amount:   "500",
 }
 
-resp, err := client.ListWalletLogs(data)
+resp, err := client.ListWalletLogs(ctx, data)
 ```
 
 ### 7. Identity Management
@@ -337,7 +340,7 @@ data := fincra.VerifyBankAccountBody{
  Iban:          "999",
 }
 
-resp, err := client.VerifyBankAccount(data)
+resp, err := client.VerifyBankAccount(ctx, data)
 ```
 
 #### - BVN Resolution:
@@ -352,7 +355,7 @@ data := fincra.VerifyBVNBody{
  Business: "6457d39b12b4401f99a54772",
 }
 
-resp, err := client.VerifyBVN(data)
+resp, err := client.VerifyBVN(ctx, data)
 ```
 
 ### 8. Virtual Account
@@ -377,7 +380,7 @@ data := fincra.CreateVirtualAccountDto{
  Channel: "providus",
 }
 
-resp, err := client.CreateVirtualAccount(data)
+resp, err := client.CreateVirtualAccount(ctx, data)
 ```
 
 #### - List virtual accounts [here](https://docs.fincra.com/reference/get-merchant-virtual-account-requests):
@@ -391,7 +394,7 @@ options := fincra.Options{
  Currency:    "NGN",
 }
 
-resp, err := client.ListVirtualAccounts(options)
+resp, err := client.ListVirtualAccounts(ctx, options)
 ```
 
 _N/B_: In `Options`, one or more of `Currency`, `BusinessName`, `IssuedDate`, `RequestedDate`, `AccountNumber` and `Status` must be passed as payload.
@@ -403,7 +406,7 @@ This method is used for getting all account requests belonging to a merchant.
 Usage example:
 
 ```go
-resp, err := client.ListVirtualAccountRequests()
+resp, err := client.ListVirtualAccountRequests(ctx)
 ```
 
 #### - Fetch a virtual account by currency [here](https://docs.fincra.com/reference/get-merchant-virtual-account-by-currency):
@@ -424,7 +427,7 @@ Usage example:
 Accepts two parameters. First parameter represents the BVN and second represents the business ID.
 
 ```go
-resp, err := client.ListVirtualAccountByBvn("0123456789", "6457d39b12b4401f99a54772")
+resp, err := client.ListVirtualAccountByBvn(ctx, "0123456789", "6457d39b12b4401f99a54772")
 ```
 
 #### - Fetch a virtual account [here](https://docs.fincra.com/reference/get-one-virtual-account):
@@ -435,7 +438,7 @@ Usage example:
 Accepts a parameter that represents the Virtual Account ID.
 
 ```go
-resp, err := client.ListVirtualAccount("6457d39b12b4401f99a54772")
+resp, err := client.ListVirtualAccount(ctx, "6457d39b12b4401f99a54772")
 ```
 
 ### Todos:

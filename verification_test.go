@@ -1,6 +1,7 @@
 package fincra
 
 import (
+	"context"
 	"fmt"
 	"testing"
 )
@@ -8,6 +9,7 @@ import (
 func TestVerifyBankAccount(t *testing.T) {
 	t.Run("verify a bank account", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
 		request := VerifyBankAccountBody{
 			AccountNumber: "0929292929",
@@ -16,7 +18,7 @@ func TestVerifyBankAccount(t *testing.T) {
 			Iban:          "999",
 		}
 
-		resp, err := client.VerifyBankAccount(request)
+		resp, err := client.VerifyBankAccount(ctx, request)
 		if err != nil {
 			t.Errorf("error verifying bank account: %v", err)
 		}
@@ -42,13 +44,14 @@ func TestVerifyBankAccount(t *testing.T) {
 func TestVerifyBVN(t *testing.T) {
 	t.Run("verify a bvn", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
 		request := VerifyBVNBody{
 			Bvn:      "09292929221",
 			Business: "6457d39b12b4401f99a54772",
 		}
 
-		resp, err := client.VerifyBVN(request)
+		resp, err := client.VerifyBVN(ctx, request)
 		if err != nil {
 			t.Errorf("error verifying bvn: %v", err)
 		}

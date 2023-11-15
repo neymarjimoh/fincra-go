@@ -1,5 +1,7 @@
 package fincra
 
+import "context"
+
 type TransactionType string
 type FeeBearerType string
 
@@ -23,8 +25,8 @@ type CreateQuoteBody struct {
 	SourceCurrency      string                 `json:"sourceCurrency"`
 }
 
-func (c *Client) CreateQuote(quote *CreateQuoteBody) (Response, error) {
+func (c *Client) CreateQuote(ctx context.Context, quote *CreateQuoteBody) (Response, error) {
 	path := "/quotes/generate"
 
-	return c.sendRequest("POST", path, quote)
+	return c.sendRequest(ctx, "POST", path, quote)
 }

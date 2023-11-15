@@ -63,18 +63,7 @@ func getBaseUrl(sandbox bool) *url.URL {
 
 type Response map[string]interface{}
 
-func (c *Client) sendRequest(method, path string, payload interface{}, ctx ...context.Context) (Response, error) {
-	defaultCtx, cancel := context.WithTimeout(context.Background(), c.HttpClient.Timeout)
-	defer cancel()
-
-	var effectiveCtx context.Context
-
-	if len(ctx) > 0 {
-		effectiveCtx = ctx[0]
-	} else {
-		effectiveCtx = defaultCtx
-	}
-
+func (c *Client) sendRequest(ctx context.Context, method, path string, payload interface{}) (Response, error) {
 	var buf io.ReadWriter
 	if payload != nil {
 		buf = new(bytes.Buffer)
@@ -86,7 +75,7 @@ func (c *Client) sendRequest(method, path string, payload interface{}, ctx ...co
 
 	url := fmt.Sprintf("%s%s", c.BaseUrl.String(), path)
 
-	req, err := http.NewRequestWithContext(effectiveCtx, method, url, buf)
+	req, err := http.NewRequestWithContext(ctx, method, url, buf)
 	if err != nil {
 		return nil, fmt.Errorf("error instantiating request: %w", err)
 	}
@@ -108,7 +97,9 @@ func (c *Client) sendRequest(method, path string, payload interface{}, ctx ...co
 	}
 
 	var jsonResponse Response
-	_ = json.Unmarshal(responseBody, &jsonResponse)
+	if err := json.Unmarshal(responseBody, &jsonResponse); err != nil {
+        return nil, fmt.Errorf("error decoding response: %w", err)
+    }
 
 	return jsonResponse, nil
 }

@@ -1,6 +1,7 @@
 package fincra
 
 import (
+	"context"
 	"fmt"
 	"testing"
 )
@@ -21,8 +22,9 @@ func TestCreateVirtualAccount(t *testing.T) {
 
 	t.Run("create virtual account", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
-		resp, err := client.CreateVirtualAccount(request)
+		resp, err := client.CreateVirtualAccount(ctx, request)
 		if err != nil {
 			t.Errorf("error creating virtual account: %v", err)
 		}
@@ -38,8 +40,9 @@ func TestListVirtualAccounts(t *testing.T) {
 		options := Options{
 			Currency: "EUR",
 		}
+		ctx := context.Background()
 
-		resp, err := client.ListVirtualAccounts(options)
+		resp, err := client.ListVirtualAccounts(ctx, options)
 		if err != nil {
 			t.Errorf("error listing virtual accounts: %v", err)
 		}
@@ -65,8 +68,9 @@ func TestListVirtualAccounts(t *testing.T) {
 func TestListVirtualAccountRequests(t *testing.T) {
 	t.Run("list virtual account requests", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
-		resp, err := client.ListVirtualAccountRequests()
+		resp, err := client.ListVirtualAccountRequests(ctx)
 		if err != nil {
 			t.Errorf("error listing virtual account requests: %v", err)
 		}
@@ -92,8 +96,9 @@ func TestListVirtualAccountRequests(t *testing.T) {
 func TestListVirtualAccountByCurrency(t *testing.T) {
 	t.Run("Fetch a virtual account by currency", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
-		resp, err := client.ListVirtualAccountByCurrency("EUR")
+		resp, err := client.ListVirtualAccountByCurrency(ctx, "EUR")
 		if err != nil {
 			t.Errorf("error fetching a virtual account by currency: %v", err)
 		}
@@ -119,8 +124,9 @@ func TestListVirtualAccountByCurrency(t *testing.T) {
 func TestListVirtualAccountByBvn(t *testing.T) {
 	t.Run("Fetch a virtual account by BVN", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
-		resp, err := client.ListVirtualAccountByBvn("0123456789", "6457d39b12b4401f99a54772")
+		resp, err := client.ListVirtualAccountByBvn(ctx, "0123456789", "6457d39b12b4401f99a54772")
 		if err != nil {
 			t.Errorf("error fetching a virtual account by BVN: %v", err)
 		}
@@ -132,8 +138,9 @@ func TestListVirtualAccountByBvn(t *testing.T) {
 func TestListVirtualAccount(t *testing.T) {
 	t.Run("Fetch a virtual account", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
-		resp, err := client.ListVirtualAccount("6457d39b12b4401f99a54772")
+		resp, err := client.ListVirtualAccount(ctx, "6457d39b12b4401f99a54772")
 		if err != nil {
 			t.Errorf("error fetching a virtual account: %v", err)
 		}

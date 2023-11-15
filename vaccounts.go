@@ -1,6 +1,7 @@
 package fincra
 
 import (
+	"context"
 	"fmt"
 	"strings"
 
@@ -58,15 +59,15 @@ type Options struct {
 }
 
 // read here https://docs.fincra.com/reference/request-virtual-accounts before using this method
-func (c *Client) CreateVirtualAccount(data CreateVirtualAccountDto) (Response, error) {
+func (c *Client) CreateVirtualAccount(ctx context.Context, data CreateVirtualAccountDto) (Response, error) {
 
 	path := virtualAccountUrl + "/requests"
 
-	return c.sendRequest("POST", path, data)
+	return c.sendRequest(ctx, "POST", path, data)
 }
 
 // read here https://docs.fincra.com/reference/get-merchant-virtual-account-requests for more info on this method
-func (c *Client) ListVirtualAccounts(options Options) (Response, error) {
+func (c *Client) ListVirtualAccounts(ctx context.Context, options Options) (Response, error) {
 	if utils.IsEmpty(options) {
 		return nil, fmt.Errorf("at least one option (currency, businessName, issuedDate, requestedDate, accountNumber, status) must be specified")
 	}
@@ -97,33 +98,33 @@ func (c *Client) ListVirtualAccounts(options Options) (Response, error) {
 		path += "?" + strings.Join(queryParameters, "&")
 	}
 
-	return c.sendRequest("GET", path, nil)
+	return c.sendRequest(ctx, "GET", path, nil)
 }
 
 // This method is used for getting all account requests belonging to a merchant
-func (c *Client) ListVirtualAccountRequests() (Response, error) {
+func (c *Client) ListVirtualAccountRequests(ctx context.Context) (Response, error) {
 	path := virtualAccountUrl + "requests"
 
-	return c.sendRequest("GET", path, nil)
+	return c.sendRequest(ctx, "GET", path, nil)
 }
 
 // This method is used for retrieving an account that is belongs to a merchant by currency
-func (c *Client) ListVirtualAccountByCurrency(currency string) (Response, error) {
+func (c *Client) ListVirtualAccountByCurrency(ctx context.Context, currency string) (Response, error) {
 	path := virtualAccountUrl + "?currency=" + currency
 
-	return c.sendRequest("GET", path, nil)
+	return c.sendRequest(ctx, "GET", path, nil)
 }
 
 // This method is used for retrieving an account that is belongs to a merchant by BVN
-func (c *Client) ListVirtualAccountByBvn(bvn, businessId string) (Response, error) {
+func (c *Client) ListVirtualAccountByBvn(ctx context.Context, bvn, businessId string) (Response, error) {
 	path := virtualAccountUrl + "/bvn?bvn=" + bvn + "&business=" + businessId
 
-	return c.sendRequest("GET", path, nil)
+	return c.sendRequest(ctx, "GET", path, nil)
 }
 
 // This method is used for retrieving a virtual account
-func (c *Client) ListVirtualAccount(accountId string) (Response, error) {
+func (c *Client) ListVirtualAccount(ctx context.Context, accountId string) (Response, error) {
 	path := virtualAccountUrl + "/virtual-accounts/" + accountId
 
-	return c.sendRequest("GET", path, nil)
+	return c.sendRequest(ctx, "GET", path, nil)
 }
