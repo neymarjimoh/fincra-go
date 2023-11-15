@@ -1,6 +1,7 @@
 package fincra
 
 import (
+	"context"
 	"fmt"
 	"testing"
 )
@@ -10,7 +11,9 @@ const businessId = "6457d39b12b4401f99a54772"
 func TestListChargebacks(t *testing.T) {
 	t.Run("list business chargebacks", func(t *testing.T) {
 		client := defaultTestClient()
-		resp, err := client.ListChargeBacks(businessId)
+		ctx := context.Background()
+
+		resp, err := client.ListChargeBacks(ctx, businessId)
 		if err != nil {
 			t.Errorf("error lsiting all chargebacks: %v", err)
 		}
@@ -41,8 +44,9 @@ func TestAcceptChargeBack(t *testing.T) {
 
 	t.Run("accept chargeback", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
-		resp, err := client.AcceptChargeBack(acceptChargeBack)
+		resp, err := client.AcceptChargeBack(ctx, acceptChargeBack)
 		if err != nil {
 			t.Errorf("error accepting chargeback: %v", err)
 		}
@@ -60,8 +64,9 @@ func TestRejectChargeBack(t *testing.T) {
 
 	t.Run("reject chargeback", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
-		resp, err := client.RejectChargeBack(rejectChargeBack)
+		resp, err := client.RejectChargeBack(ctx, rejectChargeBack)
 		if err != nil {
 			t.Errorf("error rejecting chargeback: %v", err)
 		}

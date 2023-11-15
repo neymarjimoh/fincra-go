@@ -1,6 +1,7 @@
 package fincra
 
 import (
+	"context"
 	"fmt"
 	"testing"
 )
@@ -34,8 +35,9 @@ func TestCreateBeneficiary(t *testing.T) {
 
 	t.Run("create beneficiary", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
-		resp, err := client.CreateBeneficiary(createBeneficiary)
+		resp, err := client.CreateBeneficiary(ctx, createBeneficiary)
 		if err != nil {
 			t.Errorf("error creating beneficiary: %v", err)
 		}
@@ -67,8 +69,9 @@ func TestGetBeneficiaries(t *testing.T) {
 
 	t.Run("get all beneficiaries", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
-		resp, err := client.GetAllBeneficiaries(getBeneficiary)
+		resp, err := client.GetAllBeneficiaries(ctx, getBeneficiary)
 		if err != nil {
 			t.Errorf("error getting all beneficiaries: %v", err)
 		}
@@ -99,8 +102,9 @@ func TestGetBeneficiary(t *testing.T) {
 
 	t.Run("get beneficiary", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
-		resp, err := client.GetBeneficiary(getABeneficiary)
+		resp, err := client.GetBeneficiary(ctx, getABeneficiary)
 		if err != nil {
 			t.Errorf("error getting the specified beneficiary: %v", err)
 		}
@@ -133,8 +137,9 @@ func TestUpdateBeneficiary(t *testing.T) {
 
 	t.Run("update beneficiary", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
-		resp, err := client.UpdateBeneficiary(updateBeneficiary)
+		resp, err := client.UpdateBeneficiary(ctx, updateBeneficiary)
 		if err != nil {
 			t.Errorf("error updating beneficiary: %v", err)
 		}
@@ -151,8 +156,9 @@ func TestDeleteBeneficiary(t *testing.T) {
 
 	t.Run("delete beneficiary", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
-		resp, err := client.DeleteBeneficiary(getABeneficiary)
+		resp, err := client.DeleteBeneficiary(ctx, getABeneficiary)
 		if err != nil {
 			t.Errorf("error deleting the specified beneficiary: %v", err)
 		}

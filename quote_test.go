@@ -1,6 +1,7 @@
 package fincra
 
 import (
+	"context"
 	"fmt"
 	"testing"
 )
@@ -20,8 +21,9 @@ func TestCreateQuote(t *testing.T) {
 
 	t.Run("create quote", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
-		resp, err := client.CreateQuote(createQuote)
+		resp, err := client.CreateQuote(ctx, createQuote)
 		if err != nil {
 			t.Errorf("error creating quote: %v", err)
 		}

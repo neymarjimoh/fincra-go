@@ -1,6 +1,7 @@
 package fincra
 
 import (
+	"context"
 	"fmt"
 	"testing"
 )
@@ -9,7 +10,8 @@ func TestGetBusinessId(t *testing.T) {
 	t.Run("fetch business info", func(t *testing.T) {
 		client := defaultTestClient()
 
-		resp, err := client.GetBusinessId()
+		ctx := context.Background()
+		resp, err := client.GetBusinessId(ctx)
 		if err != nil {
 			t.Errorf("error fetching business info: %v", err)
 		}

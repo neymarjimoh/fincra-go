@@ -1,6 +1,7 @@
 package fincra
 
 import (
+	"context"
 	"fmt"
 	"testing"
 )
@@ -8,8 +9,9 @@ import (
 func TestGetBusinessConversions(t *testing.T) {
 	t.Run("get business conversions", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
-		resp, err := client.GetBusinessConversions("6457d39b12b4401f99a54772")
+		resp, err := client.GetBusinessConversions(ctx, "6457d39b12b4401f99a54772")
 		if err != nil {
 			t.Errorf("error getting conversions: %v", err)
 		}
@@ -40,8 +42,9 @@ func TestCreateConversion(t *testing.T) {
 
 	t.Run("create conversion", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
-		resp, err := client.CreateConversion(createConversion)
+		resp, err := client.CreateConversion(ctx, createConversion)
 		if err != nil {
 			t.Errorf("error creating conversion: %v", err)
 		}
@@ -53,8 +56,9 @@ func TestCreateConversion(t *testing.T) {
 func TestGetConversion(t *testing.T) {
 	t.Run("get a conversion", func(t *testing.T) {
 		client := defaultTestClient()
+		ctx := context.Background()
 
-		resp, err := client.GetConversion("12345678")
+		resp, err := client.GetConversion(ctx, "12345678")
 		if err != nil {
 			t.Errorf("error getting a conversion: %v", err)
 		}

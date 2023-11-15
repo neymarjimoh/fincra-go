@@ -1,5 +1,7 @@
 package fincra
 
+import "context"
+
 type Type string
 
 const (
@@ -21,15 +23,15 @@ type VerifyBVNBody struct {
 }
 
 // lets you verify a bank account
-func (c *Client) VerifyBankAccount(verifyData VerifyBankAccountBody) (Response, error) {
+func (c *Client) VerifyBankAccount(ctx context.Context, verifyData VerifyBankAccountBody) (Response, error) {
 	path := verificationUrl + "accounts/resolve"
 
-	return c.sendRequest("POST", path, verifyData)
+	return c.sendRequest(ctx, "POST", path, verifyData)
 }
 
 // lets you verify a BVN
-func (c *Client) VerifyBVN(verifyData VerifyBVNBody) (Response, error) {
+func (c *Client) VerifyBVN(ctx context.Context, verifyData VerifyBVNBody) (Response, error) {
 	path := verificationUrl + "bvn-verification"
 
-	return c.sendRequest("POST", path, verifyData)
+	return c.sendRequest(ctx, "POST", path, verifyData)
 }

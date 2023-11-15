@@ -1,6 +1,7 @@
 package fincra
 
 import (
+	"context"
 	"errors"
 )
 
@@ -106,7 +107,7 @@ type GetBeneficiaryParams struct {
 // create a beneficiary for business
 // client := fincra.NewClient(apiKey)
 // resp, err := client.CreateBeneficiary(&client.CreateBeneficiaryBody{})
-func (c *Client) CreateBeneficiary(beneficiary *CreateBeneficiaryBody) (Response, error) {
+func (c *Client) CreateBeneficiary(ctx context.Context, beneficiary *CreateBeneficiaryBody) (Response, error) {
 	if beneficiary.BusinessId == "" {
 		return Response{}, errors.New("business ID is required for beneficiary")
 	}
@@ -128,13 +129,13 @@ func (c *Client) CreateBeneficiary(beneficiary *CreateBeneficiaryBody) (Response
 		UniqueIdentifier:   beneficiary.UniqueIdentifier,
 	}
 
-	return c.sendRequest("POST", path, &request)
+	return c.sendRequest(ctx, "POST", path, &request)
 }
 
 // Get all beneficiaries for a business
 const businessIdRequiredError = "businessId is required to fetch the beneficiary"
 
-func (c *Client) GetAllBeneficiaries(params *GetAllBeneficiariesParams) (Response, error) {
+func (c *Client) GetAllBeneficiaries(ctx context.Context, params *GetAllBeneficiariesParams) (Response, error) {
 	if params.BusinessId == "" {
 		return Response{}, errors.New(businessIdRequiredError)
 	}
@@ -154,11 +155,11 @@ func (c *Client) GetAllBeneficiaries(params *GetAllBeneficiariesParams) (Respons
 		PerPage: params.PerPage,
 	}
 
-	return c.sendRequest("GET", path, &request)
+	return c.sendRequest(ctx, "GET", path, &request)
 }
 
 // Get a benefiiciary from a business
-func (c *Client) GetBeneficiary(params *GetBeneficiaryParams) (Response, error) {
+func (c *Client) GetBeneficiary(ctx context.Context, params *GetBeneficiaryParams) (Response, error) {
 	if params.BusinessId == "" {
 		return Response{}, errors.New(businessIdRequiredError)
 	}
@@ -169,12 +170,12 @@ func (c *Client) GetBeneficiary(params *GetBeneficiaryParams) (Response, error) 
 
 	path := beneficiariesUrl + params.BusinessId + "/" + params.BeneficiaryId
 
-	return c.sendRequest("GET", path, nil)
+	return c.sendRequest(ctx, "GET", path, nil)
 }
 
 // update a beneficiary of a business
 // see https://docs.fincra.com/reference/update-a-beneficiary for required parameters
-func (c *Client) UpdateBeneficiary(body *UpdateBeneficiaryBody) (Response, error) {
+func (c *Client) UpdateBeneficiary(ctx context.Context, body *UpdateBeneficiaryBody) (Response, error) {
 	if body.BusinessId == "" {
 		return Response{}, errors.New("businessId is required to update the beneficiary")
 	}
@@ -199,11 +200,11 @@ func (c *Client) UpdateBeneficiary(body *UpdateBeneficiaryBody) (Response, error
 		UniqueIdentifier:   body.UniqueIdentifier,
 	}
 
-	return c.sendRequest("PATCH", path, &request)
+	return c.sendRequest(ctx, "PATCH", path, &request)
 }
 
 // delete a beneficiary of a business
-func (c *Client) DeleteBeneficiary(params *GetBeneficiaryParams) (Response, error) {
+func (c *Client) DeleteBeneficiary(ctx context.Context, params *GetBeneficiaryParams) (Response, error) {
 	if params.BusinessId == "" {
 		return Response{}, errors.New("businessId is required to fetch the beneficiary")
 	}
@@ -214,5 +215,5 @@ func (c *Client) DeleteBeneficiary(params *GetBeneficiaryParams) (Response, erro
 
 	path := beneficiariesUrl + params.BusinessId + "/" + params.BeneficiaryId
 
-	return c.sendRequest("DELETE", path, nil)
+	return c.sendRequest(ctx, "DELETE", path, nil)
 }
