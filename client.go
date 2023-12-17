@@ -16,27 +16,31 @@ const (
 	liveUrl    = "https://api.fincra.com"
 )
 
+// Client represents a client for interacting with the Fincra API.
 type Client struct {
 	apiKey     string
 	BaseUrl    *url.URL
 	HttpClient *http.Client
 }
 
+// Option represents an option for configuring the Fincra client.
 type Option func(c *Client)
 
+// WithSandbox sets the client to use the sandbox environment.
 func WithSandbox(isSandbox bool) Option {
 	return func(c *Client) {
 		c.BaseUrl = getBaseUrl(isSandbox)
 	}
 }
 
+// WithTimeout sets the timeout duration for HTTP requests made by the client.
 func WithTimeout(timeout time.Duration) Option {
 	return func(c *Client) {
 		c.HttpClient.Timeout = timeout
 	}
 }
 
-// instantiate a new fincra client
+// NewClient creates a new instance of the Fincra client.
 func NewClient(apiKey string, opts ...Option) *Client {
 	c := &Client{
 		apiKey: apiKey,
@@ -51,7 +55,6 @@ func NewClient(apiKey string, opts ...Option) *Client {
 	return c
 }
 
-// gets the correct base url for live and test mode
 func getBaseUrl(sandbox bool) *url.URL {
 	url, _ := url.Parse(liveUrl)
 	if sandbox {
@@ -61,6 +64,7 @@ func getBaseUrl(sandbox bool) *url.URL {
 	return url
 }
 
+// Response represents the response from the Fincra API.
 type Response map[string]interface{}
 
 func (c *Client) sendRequest(ctx context.Context, method, path string, payload interface{}) (Response, error) {
@@ -98,8 +102,8 @@ func (c *Client) sendRequest(ctx context.Context, method, path string, payload i
 
 	var jsonResponse Response
 	if err := json.Unmarshal(responseBody, &jsonResponse); err != nil {
-        return nil, fmt.Errorf("error decoding response: %w", err)
-    }
+		return nil, fmt.Errorf("error decoding response: %w", err)
+	}
 
 	return jsonResponse, nil
 }
