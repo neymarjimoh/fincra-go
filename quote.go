@@ -12,6 +12,7 @@ const (
 	Business     FeeBearerType   = "business"
 )
 
+// CreateQuoteBody represents the request body for creating a quote.
 type CreateQuoteBody struct {
 	Action              string                 `json:"action"`
 	TransactionType     TransactionType        `json:"transactionType"`
@@ -25,6 +26,8 @@ type CreateQuoteBody struct {
 	SourceCurrency      string                 `json:"sourceCurrency"`
 }
 
+// CreateQuote creates a new quote.
+// It returns the API response and an error, if any.
 func (c *Client) CreateQuote(ctx context.Context, quote *CreateQuoteBody) (Response, error) {
 	path := "/quotes/generate"
 

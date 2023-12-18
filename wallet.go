@@ -18,7 +18,9 @@ type LogsDto struct {
 	PerPage  string     `json:"perPage"`
 }
 
-// lists all the account balance information of a business
+// ListWallets lists all the account balance information of a business.
+// It takes a context and a business ID as parameters.
+// It returns a Response and an error.
 func (c *Client) ListWallets(ctx context.Context, businessId string) (Response, error) {
 
 	path := walletUrl + "?businessID=" + businessId
@@ -26,7 +28,9 @@ func (c *Client) ListWallets(ctx context.Context, businessId string) (Response, 
 	return c.sendRequest(ctx, "GET", path, nil)
 }
 
-// provides information to the merchant about a specific account balance
+// ListWallet provides information to the merchant about a specific account balance.
+// It takes a context and an ID as parameters.
+// It returns a Response and an error.
 func (c *Client) ListWallet(ctx context.Context, id string) (Response, error) {
 
 	path := walletUrl + "/" + id
@@ -34,7 +38,9 @@ func (c *Client) ListWallet(ctx context.Context, id string) (Response, error) {
 	return c.sendRequest(ctx, "GET", path, nil)
 }
 
-// fetches all pay-ins and pay-outs that occurred on your integration
+// ListWalletLogs fetches all pay-ins and pay-outs that occurred on your integration.
+// It takes a context and a LogsDto as parameters.
+// It returns a Response and an error.
 func (c *Client) ListWalletLogs(ctx context.Context, logData LogsDto) (Response, error) {
 
 	path := walletUrl + "/logs"

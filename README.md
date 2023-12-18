@@ -6,7 +6,7 @@ An unofficial Go SDK for working with [Fincra API](https://fincra.com/)
 
 ## Installation
 
-#### To install, run:
+#### To install, run
 
 ```sh
 go get github.com/neymarjimoh/fincra-go
@@ -14,13 +14,13 @@ go get github.com/neymarjimoh/fincra-go
 
 ## Usage
 
-#### Import the package:
+#### Import the package
 
 ```sh
 import "github.com/neymarjimoh/fincra-go"
 ```
 
-#### Initialize a new client:
+#### Initialize a new client
 
 ```go
 import (
@@ -53,7 +53,7 @@ Note:
 
 ### 1. Business
 
-#### - Get business details:
+#### - Get business details
 
 This method lets you retrieve the unique Identifier of your business and other information such as your email etc.
 
@@ -65,7 +65,7 @@ resp, err := client.GetBusinessId(ctx)
 
 ### 2. Beneficiaries
 
-#### - Create a beneficiary:
+#### - Create a beneficiary
 
 This method is used for creating a Beneficiary.
 
@@ -104,7 +104,7 @@ resp, err := client.CreateBeneficiary(ctx, data)
 
 **NOTE**: PaymentDestination accepts an enum of CryptoWallet (crypto_wallet), BankAccount (bank_account) or MobileMoneyWallet (mobile_money_wallet)
 
-#### - Fetch a beneficiary:
+#### - List beneficiaries
 
 This method is used for retrieving a single beneficiary attached to a business.
 
@@ -120,7 +120,7 @@ data := &fincra.GetAllBeneficiariesParams{
 resp, err := client.GetAllBeneficiaries(ctx, data);
 ```
 
-#### - List beneficiaries:
+#### - Fetch a beneficiary
 
 This method is used for retrieving a single beneficiary attached to a business.
 
@@ -135,7 +135,7 @@ data := &fincra.GetBeneficiaryParams{
 resp, err := client.GetBeneficiary(ctx, data);
 ```
 
-#### - Update a beneficiary:
+#### - Update a beneficiary
 
 This method is used for updating a Beneficiary.
 
@@ -158,7 +158,7 @@ resp, err := client.UpdateBeneficiary(ctx, data)
 
 More details about the parameters for the above method [here](https://docs.fincra.com/reference/update-a-beneficiary)
 
-#### - Delete a beneficiary:
+#### - Delete a beneficiary
 
 This method is used for deleting a beneficiary.
 
@@ -175,7 +175,7 @@ resp, err := client.DeleteBeneficiary(data);
 
 ### 3. Conversions
 
-#### - Convert a currency:
+#### - Convert a currency
 
 This method can convert one currency to another provided that it's a supported conversion currency e.g NGN to USD.
 
@@ -190,7 +190,7 @@ data := &fincra.CreateConversionBody{
 resp, err := client.CreateConversion(ctx, data);
 ```
 
-#### - List conversions:
+#### - List conversions
 
 This method provides a list of all conversions performed by a business.
 
@@ -201,7 +201,7 @@ businessId := "617fefbe4a68ec99ba6af0be"
 resp, err := client.GetBusinessConversions(ctx, businessId);
 ```
 
-#### - Fetch a conversion:
+#### - Fetch a conversion
 
 This method fetches a specific conversion performed by a parent Business or sub account.
 
@@ -216,7 +216,7 @@ resp, err := client.GetConversion(ctx, conversionId);
 
 The Quotes service provides a method that allows you to generate quotes for Real-time transactions occurring on your integration.
 
-#### - Create a quote:
+#### - Create a quote
 
 This method is used for generating a quote.
 
@@ -240,7 +240,7 @@ resp, err := client.CreateQuote(ctx, data);
 
 ### 5. Chargebacks
 
-#### - List chargebacks:
+#### - List chargebacks
 
 This method lets you list all the chargebacks incurred on your account.
 
@@ -251,7 +251,7 @@ businessId := "6457d39b12b4401f99a54772"
 resp, err := client.ListChargeBacks(ctx, businessId)
 ```
 
-#### - Accept a chargeback:
+#### - Accept a chargeback
 
 This method lets you accept a chargeback
 
@@ -266,7 +266,7 @@ data := &fincra.AcceptChargeBackDto{
 resp, err := client.AcceptChargeBack(ctx, data)
 ```
 
-#### - Reject a chargeback:
+#### - Reject a chargeback
 
 This method lets you reject a chargeback
 
@@ -284,7 +284,7 @@ resp, err := client.RejectChargeBack(ctx, data)
 
 ### 6. Wallets (Balance)
 
-#### - Fetch all balances:
+#### - Fetch all balances
 
 This method lists all the account balance information of a business
 
@@ -295,7 +295,7 @@ businessId := "6457d39b12b4401f99a54772"
 resp, err := client.ListWallets(ctx, businessId)
 ```
 
-#### - Fetch a blance:
+#### - Fetch a blance
 
 This method provides information to the merchant about a specific account balance
 
@@ -306,7 +306,7 @@ walletId := "66433"
 resp, err := client.ListWallet(ctx, walletId)
 ```
 
-#### - List account balance logs:
+#### - List account balance logs
 
 This method fetches all pay-ins and pay-outs that occurred on your integration
 
@@ -326,7 +326,7 @@ resp, err := client.ListWalletLogs(ctx, data)
 
 ### 7. Identity Management
 
-#### - Verify account number:
+#### - Verify account number
 
 This method lets you verify a bank account
 
@@ -343,7 +343,7 @@ data := fincra.VerifyBankAccountBody{
 resp, err := client.VerifyBankAccount(ctx, data)
 ```
 
-#### - BVN Resolution:
+#### - BVN Resolution
 
 This method lets you verify a bank account
 
@@ -360,7 +360,7 @@ resp, err := client.VerifyBVN(ctx, data)
 
 ### 8. Virtual Account
 
-#### - Create a virtual account [here](https://docs.fincra.com/reference/request-virtual-accounts):
+#### - Create a virtual account [here](https://docs.fincra.com/reference/request-virtual-accounts)
 
 This method lets you create NGN and MCY virtual accounts. You’ll need to complete currency-specific fields as well as shared fields applicable to all currencies. E.g firstName and lastName are applicable to both NGN and MCY account requests while meansofID is applicable to only MCY accounts.
 
@@ -383,7 +383,7 @@ data := fincra.CreateVirtualAccountDto{
 resp, err := client.CreateVirtualAccount(ctx, data)
 ```
 
-#### - List virtual accounts [here](https://docs.fincra.com/reference/get-merchant-virtual-account-requests):
+#### - List virtual accounts [here](https://docs.fincra.com/reference/get-merchant-virtual-account-requests)
 
 This method fetches all virtual accounts belonging to a merchant.
 
@@ -399,7 +399,7 @@ resp, err := client.ListVirtualAccounts(ctx, options)
 
 _N/B_: In `Options`, one or more of `Currency`, `BusinessName`, `IssuedDate`, `RequestedDate`, `AccountNumber` and `Status` must be passed as payload.
 
-#### - List virtual account requests [here](https://docs.fincra.com/reference/get-virtual-account-requests):
+#### - List virtual account requests [here](https://docs.fincra.com/reference/get-virtual-account-requests)
 
 This method is used for getting all account requests belonging to a merchant.
 
@@ -409,7 +409,7 @@ Usage example:
 resp, err := client.ListVirtualAccountRequests(ctx)
 ```
 
-#### - Fetch a virtual account by currency [here](https://docs.fincra.com/reference/get-merchant-virtual-account-by-currency):
+#### - Fetch a virtual account by currency [here](https://docs.fincra.com/reference/get-merchant-virtual-account-by-currency)
 
 This method is used for retrieving an account that is belongs to a merchant by currency.
 
@@ -419,7 +419,7 @@ Usage example:
 resp, err := client.ListVirtualAccountByCurrency("EUR")
 ```
 
-#### - Fetch a virtual account by BVN [here](https://docs.fincra.com/reference/fetch-a-virtual-account-by-bvn):
+#### - Fetch a virtual account by BVN [here](https://docs.fincra.com/reference/fetch-a-virtual-account-by-bvn)
 
 This method is used for retrieving an account that is belongs to a merchant by BVN.
 
@@ -430,7 +430,7 @@ Accepts two parameters. First parameter represents the BVN and second represents
 resp, err := client.ListVirtualAccountByBvn(ctx, "0123456789", "6457d39b12b4401f99a54772")
 ```
 
-#### - Fetch a virtual account [here](https://docs.fincra.com/reference/get-one-virtual-account):
+#### - Fetch a virtual account [here](https://docs.fincra.com/reference/get-one-virtual-account)
 
 This method is used for retrieving a virtual account.
 
@@ -441,9 +441,8 @@ Accepts a parameter that represents the Virtual Account ID.
 resp, err := client.ListVirtualAccount(ctx, "6457d39b12b4401f99a54772")
 ```
 
-### Todos:
+### Todos
 
 - [ ] Payins endpoints, tests and update README
 - [ ] Payouts endpoints, tests and update README
 - [ ] Checkouts endpoints, tests and update README
-

@@ -51,7 +51,8 @@ func TestListVirtualAccounts(t *testing.T) {
 
 		want := map[string]interface{}{
 			"success": true,
-			"message": "Merchant virtual accounts fetched successfully",
+			// "message": "Merchant virtual accounts fetched successfully",
+			"message": "[Notice: Virtual Account endpoint changing soon. Date to be communicated soon] Merchant virtual accounts fetched successfully",
 		}
 
 		got := make(map[string]interface{}, len(want))
@@ -79,7 +80,8 @@ func TestListVirtualAccountRequests(t *testing.T) {
 
 		want := map[string]interface{}{
 			"success": true,
-			"message": "Virtual account requests fetched successfully",
+			// "message": "Virtual account requests fetched successfully",
+			"message": "[Notice: Virtual Account endpoint changing soon. Date to be communicated soon] Virtual account requests fetched successfully",
 		}
 
 		got := make(map[string]interface{}, len(want))
@@ -107,7 +109,8 @@ func TestListVirtualAccountByCurrency(t *testing.T) {
 
 		want := map[string]interface{}{
 			"success": true,
-			"message": "Merchant virtual accounts fetched successfully",
+			// "message": "Merchant virtual accounts fetched successfully",
+			"message": "[Notice: Virtual Account endpoint changing soon. Date to be communicated soon] Merchant virtual accounts fetched successfully",
 		}
 
 		got := make(map[string]interface{}, len(want))
